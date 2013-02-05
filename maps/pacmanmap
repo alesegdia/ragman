@@ -1,0 +1,22 @@
+FILE map_tiles.png
+TILEWIDTH 16
+TILEHEIGHT 16
+SIZE 7 7 (21 28)
+" ahora mismo solo hay una propiedad, pero despues habra mas
+TILE 0 true
+TILE 1 true
+TILE 2 true
+TILE 3 true
+TILE 4 true
+TILE 5 true
+TILE 6 true
+TILE 7 true
+TILE 8 true
+TILE 9 false
+L 0 4 4 4 4 4 4
+L 4 9 9 9 9 9 4
+L 4 9 0 4 2 9 4
+L 4 9 6 4 8 9 4
+L 4 9 9 9 9 9 4
+L 4 9 9 9 9 9 4
+L 6 4 4 4 4 4 8
