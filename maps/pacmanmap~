@@ -1,5 +1,5 @@
 TILESIZE 16 16 7 7
-map_tiles.png
+FILE map_tiles.png
 TILE 0 true
 TILE 1 true
 TILE 2 true

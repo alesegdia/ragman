@@ -10,7 +10,7 @@ class GameWindow < Gosu::Window
     super 640, 480, false
     self.caption = "Sprite Testing"
 
-    @bgcolor = Gosu::Color.new(255,255,255,255)
+	@bgcolor = Gosu::Color.new(255,255,255,255)
 
     #@sprite = Sprite.new(self, 200);
     #@sprite.add_anim("anims/sw_front.png", "down", 32, 32);

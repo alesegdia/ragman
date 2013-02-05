@@ -32,7 +32,7 @@ class Map
     # Load tiles
     #File.readlines(file.gets)
     tile_images = Gosu::Image::load_tiles(window,
-                                          file.gets.chomp,
+                                          (file.gets())[0..-1],
                                           @tile_width,
                                           @tile_height,
                                           false)
