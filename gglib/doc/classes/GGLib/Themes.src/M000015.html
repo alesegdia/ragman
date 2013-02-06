@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>tracePanel (GGLib::Themes)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File gglib/theme.rb, line 188</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Themes</span>.<span class="ruby-identifier">tracePanel</span> 
+    <span class="ruby-constant">ImageTheme</span>.<span class="ruby-identifier">new</span>(
+      <span class="ruby-value str">&quot;TraceTheme&quot;</span>,
+      <span class="ruby-constant">ThemeFontGroup</span>.<span class="ruby-identifier">new</span>(
+        <span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Font</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">$window</span>, <span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-identifier">default_font_name</span>, <span class="ruby-value">17</span>),
+        <span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Font</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">$window</span>, <span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-identifier">default_font_name</span>, <span class="ruby-value">25</span>),
+        <span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Font</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">$window</span>, <span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-identifier">default_font_name</span>, <span class="ruby-value">20</span>)
+      ),
+      <span class="ruby-constant">ThemeImageGroup</span>.<span class="ruby-identifier">new</span>(
+        <span class="ruby-identifier">$gglroot</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;/media/trace.png&quot;</span>,
+        <span class="ruby-identifier">$gglroot</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;/null.png&quot;</span>,
+        <span class="ruby-identifier">$gglroot</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;/null.png&quot;</span>
+      )
+    )
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

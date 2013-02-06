@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>onStart (EndMenu)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File examples/FadeIn.rb, line 35</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">onStart</span>
+    <span class="ruby-identifier">$window</span>.<span class="ruby-identifier">setBackground</span>(<span class="ruby-value str">&quot;img/bg.png&quot;</span>)
+    <span class="ruby-constant">GGLib</span><span class="ruby-operator">::</span><span class="ruby-constant">Button</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:fade_back</span>, <span class="ruby-value str">&quot;Fade Back&quot;</span>, <span class="ruby-value">270</span>, <span class="ruby-value">200</span>, <span class="ruby-constant">Proc</span>.<span class="ruby-identifier">new</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">widget</span><span class="ruby-operator">|</span> <span class="ruby-identifier">$window</span>.<span class="ruby-identifier">state</span> = <span class="ruby-constant">GGLib</span><span class="ruby-operator">::</span><span class="ruby-constant">FadeScreen</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">StartMenu</span>.<span class="ruby-identifier">new</span>, <span class="ruby-value">2</span>) }, <span class="ruby-constant">GGLib</span><span class="ruby-operator">::</span><span class="ruby-constant">Themes</span><span class="ruby-operator">::</span><span class="ruby-constant">BlueSteel</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

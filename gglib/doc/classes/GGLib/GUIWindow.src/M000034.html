@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (GGLib::GUIWindow)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File gglib/window.rb, line 11</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">w</span>=<span class="ruby-value">640</span>, <span class="ruby-identifier">h</span>=<span class="ruby-value">480</span>, <span class="ruby-identifier">fullscreen</span>=<span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">u</span>=<span class="ruby-value">20</span>, <span class="ruby-identifier">stateObj</span>=<span class="ruby-constant">BlankState</span>)
+    <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">w</span>, <span class="ruby-identifier">h</span>, <span class="ruby-identifier">fullscreen</span>, <span class="ruby-identifier">u</span>)
+    <span class="ruby-identifier">$window</span>=<span class="ruby-keyword kw">self</span> <span class="ruby-comment cmt">#pre initialize global var to allow win initialization</span>
+    <span class="ruby-ivar">@background_image</span> = <span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword kw">__FILE__</span>))<span class="ruby-operator">+</span><span class="ruby-value str">&quot;/null.png&quot;</span>, <span class="ruby-keyword kw">true</span>)
+    <span class="ruby-ivar">@cursor</span> = <span class="ruby-constant">Cursor</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword kw">__FILE__</span>))<span class="ruby-operator">+</span><span class="ruby-value str">&quot;/media/cursor.bmp&quot;</span>, <span class="ruby-keyword kw">false</span>)
+    <span class="ruby-ivar">@framedrawn</span>=<span class="ruby-keyword kw">false</span>
+    <span class="ruby-ivar">@timer</span>=<span class="ruby-value">0</span>
+    <span class="ruby-ivar">@camera</span>=<span class="ruby-constant">Camera</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@images</span> = <span class="ruby-constant">CArray</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@mapimages</span> = <span class="ruby-constant">CArray</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@guiWidgets</span> = <span class="ruby-constant">CArray</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@state</span>=<span class="ruby-identifier">stateObj</span>
+    <span class="ruby-ivar">@focused</span>=<span class="ruby-keyword kw">nil</span>
+    <span class="ruby-ivar">@stickfocused</span>=<span class="ruby-keyword kw">nil</span>
+    <span class="ruby-ivar">@leftdrag</span> = <span class="ruby-constant">MouseDragEvent</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@rightdrag</span> = <span class="ruby-constant">MouseDragEvent</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@state</span>.<span class="ruby-identifier">start</span>
+    <span class="ruby-identifier">$window</span>=<span class="ruby-keyword kw">self</span>
+    <span class="ruby-identifier">$theme_init_hook</span>.<span class="ruby-identifier">call</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: GGLib::Tile</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">GGLib::Tile</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/tile_rb.html">
+                tile.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+The <a href="Tile.html">Tile</a> class represents a rectangular region on
+the screen. It is synonymous with the Rect structure used in many C
+programs.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000095">centerOn</a>&nbsp;&nbsp;
+      <a href="#M000091">contains?</a>&nbsp;&nbsp;
+      <a href="#M000110">del</a>&nbsp;&nbsp;
+      <a href="#M000109">deleteAllInstances</a>&nbsp;&nbsp;
+      <a href="#M000106">deleteById</a>&nbsp;&nbsp;
+      <a href="#M000101">each</a>&nbsp;&nbsp;
+      <a href="#M000102">eachBorder</a>&nbsp;&nbsp;
+      <a href="#M000107">getAllInstances</a>&nbsp;&nbsp;
+      <a href="#M000105">getById</a>&nbsp;&nbsp;
+      <a href="#M000096">height</a>&nbsp;&nbsp;
+      <a href="#M000099">iTile</a>&nbsp;&nbsp;
+      <a href="#M000104">intersect?</a>&nbsp;&nbsp;
+      <a href="#M000103">intersect?</a>&nbsp;&nbsp;
+      <a href="#M000090">isInTile?</a>&nbsp;&nbsp;
+      <a href="#M000094">move</a>&nbsp;&nbsp;
+      <a href="#M000089">new</a>&nbsp;&nbsp;
+      <a href="#M000098">resize</a>&nbsp;&nbsp;
+      <a href="#M000108">setAllInstances</a>&nbsp;&nbsp;
+      <a href="#M000092">setCoordinates</a>&nbsp;&nbsp;
+      <a href="#M000093">setTile</a>&nbsp;&nbsp;
+      <a href="#M000097">width</a>&nbsp;&nbsp;
+      <a href="#M000100">xTile</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">id</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+@@tile = []
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">inclusive</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+@@tile = []
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">x1</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+@@tile = []
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">x2</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+@@tile = []
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">y1</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+@@tile = []
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">y2</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+@@tile = []
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000109" class="method-detail">
+        <a name="M000109"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000109.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000109.html');return false;">
+          <span class="method-name">deleteAllInstances</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Delete all tiles int the program. (Includes classes derived from tiles)
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000106" class="method-detail">
+        <a name="M000106"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000106.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000106.html');return false;">
+          <span class="method-name">deleteById</span><span class="method-args">(id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deletes the tile with the given index
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000107" class="method-detail">
+        <a name="M000107"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000107.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000107.html');return false;">
+          <span class="method-name">getAllInstances</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns an array of all tiles
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000105" class="method-detail">
+        <a name="M000105"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000105.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000105.html');return false;">
+          <span class="method-name">getById</span><span class="method-args">(id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the tile with the given index
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000104" class="method-detail">
+        <a name="M000104"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000104.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000104.html');return false;">
+          <span class="method-name">intersect?</span><span class="method-args">(tile1,tile2)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Find out if the given two tiles intersect.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000089" class="method-detail">
+        <a name="M000089"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000089.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000089.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(x1=0,y1=0,x2=1,y2=1,inclusive=true,id=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+@inclusive decides whether or not tile edges are considered part of the
+tile
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000108" class="method-detail">
+        <a name="M000108"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000108.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000108.html');return false;">
+          <span class="method-name">setAllInstances</span><span class="method-args">(ntiles)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Override the internal array of tiles with a <a
+href="Tile.html#M000089">new</a> one
+</p>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000095" class="method-detail">
+        <a name="M000095"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000095.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000095.html');return false;">
+          <span class="method-name">centerOn</span><span class="method-args">(x, y)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+translate the cordinates of the tile so that the center of the tile is at
+the given point
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000091" class="method-detail">
+        <a name="M000091"></a>
+
+        <div class="method-heading">
+          <span class="method-name">contains?</span><span class="method-args">(x,y)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for isInTile?
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000110" class="method-detail">
+        <a name="M000110"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000110.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000110.html');return false;">
+          <span class="method-name">del</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Deletes the calling tile
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000101" class="method-detail">
+        <a name="M000101"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000101.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000101.html');return false;">
+          <span class="method-name">each</span><span class="method-args">() {|x,y| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Iterates over all of the encompased by the tile
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000102" class="method-detail">
+        <a name="M000102"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000102.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000102.html');return false;">
+          <span class="method-name">eachBorder</span><span class="method-args">(xindent=0,yindent=0) {|x, @y1+yindent| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Iterates over all of the points on the edges of the tile
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000096" class="method-detail">
+        <a name="M000096"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000096.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000096.html');return false;">
+          <span class="method-name">height</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Tile.html#M000097">width</a> of the tile
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000099" class="method-detail">
+        <a name="M000099"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000099.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000099.html');return false;">
+          <span class="method-name">iTile</span><span class="method-args">(x,y)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Find out if a point is located in the tile, including the edges of the tile
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000103" class="method-detail">
+        <a name="M000103"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000103.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000103.html');return false;">
+          <span class="method-name">intersect?</span><span class="method-args">(tile)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+See Tile::intersect?
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000090" class="method-detail">
+        <a name="M000090"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000090.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000090.html');return false;">
+          <span class="method-name">isInTile?</span><span class="method-args">(x,y)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Find out if a point is located in the tile
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000094" class="method-detail">
+        <a name="M000094"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000094.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000094.html');return false;">
+          <span class="method-name">move</span><span class="method-args">(x,y=@y)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Translate the coordinates of the tile so that the thop left corner of the
+tile is at the given coordinates
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000098" class="method-detail">
+        <a name="M000098"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000098.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000098.html');return false;">
+          <span class="method-name">resize</span><span class="method-args">(w, h)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Resize the dimensions of the tile to be w by h units
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000092" class="method-detail">
+        <a name="M000092"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000092.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000092.html');return false;">
+          <span class="method-name">setCoordinates</span><span class="method-args">(x1,y1,x2,y2)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Redefine the tile
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000093" class="method-detail">
+        <a name="M000093"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000093.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000093.html');return false;">
+          <span class="method-name">setTile</span><span class="method-args">(x1,y1,x2,y2)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Redefine the tile
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000097" class="method-detail">
+        <a name="M000097"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000097.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000097.html');return false;">
+          <span class="method-name">width</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the hieght of the tile
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000100" class="method-detail">
+        <a name="M000100"></a>
+
+        <div class="method-heading">
+          <a href="Tile.src/M000100.html" target="Code" class="method-signature"
+            onclick="popupCode('Tile.src/M000100.html');return false;">
+          <span class="method-name">xTile</span><span class="method-args">(x,y)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Find out if a point is located in the tile, <b>not</b> including the edges
+of the tile
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

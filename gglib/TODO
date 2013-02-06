@@ -1,0 +1,7 @@
+* Fix labels on RadioGroup::Layout::Horizontal
+* Fix post-construction themeing on RadioGroups
+* Add better radio button graphics for Blue Steel
+* Add Rubygoo theme support for CheckBox and RadioGroup
+* Add containers/layouts
+* Add a textarea control w/ scrolling
+* Add windows and dialogs

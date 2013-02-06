@@ -17,20 +17,15 @@ end
 class Map
   attr_reader :map, :tile_width, :tile_height
   def initialize(window, map_path)
-
+    
     # Load file, size and array map
     file = File.new(map_path, "r")
     @tile_width, @tile_height, @width, @height =
       file.gets.split(' ').drop(1).collect! { |x| Integer(x) }
-
+    
     @map = Array.new(Integer(@height)) { Array.new(Integer(@width)) }
-	puts @tile_height
-	puts @tile_width
-	puts @width
-	puts @height
-
+    
     # Load tiles
-    #File.readlines(file.gets)
     tile_images = Gosu::Image::load_tiles(window,
                                           file.gets.chomp,
                                           @tile_width,
@@ -47,14 +42,14 @@ class Map
       puts "tile created! #{id}"
       puts @tiles[id].is_solid?
     end
-
+    
     # Load map
     i = 0
     begin
       @map[i] = line.split(' ').drop(1).collect! { |x| Integer(x) }
       i += 1
     end while (line = file.gets)
-
+    
     ##puts to_s
   end
   
@@ -62,8 +57,8 @@ class Map
     ##puts to_s
     @map.each_index do |i| 
       @map[i].each_index do |j|
-        @tiles[Integer(@map[i][j])].image.draw(j * @tile_height,
-                                               i * @tile_width,
+        @tiles[Integer(@map[i][j])].image.draw(j * @tile_width,
+                                               i * @tile_height,
                                                0)
       end
     end

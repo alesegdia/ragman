@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (GGLib::Themes::WindowsTheme)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File gglib/ext/themes.rb, line 309</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+    <span class="ruby-identifier">image</span> = <span class="ruby-constant">ThemeImageGroup</span>.<span class="ruby-identifier">new</span>( 
+                  <span class="ruby-identifier">$gglroot</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;/media/windows/generic/menusmall.png&quot;</span>, 
+                  <span class="ruby-identifier">$gglroot</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;/media/bluesteel/generic/menusmall.png&quot;</span>, 
+                  <span class="ruby-identifier">$gglroot</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;/media/bluesteel/generic/menusmall.png&quot;</span>
+                )
+    <span class="ruby-identifier">font</span> = <span class="ruby-constant">DefaultFontGroup</span>
+    <span class="ruby-keyword kw">super</span>(<span class="ruby-value str">&quot;Windows.Generic&quot;</span>, <span class="ruby-identifier">font</span>, <span class="ruby-identifier">image</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,6 @@
+require 'rubygems'
+require 'gosu'
+
+class Grid
+  def initialize(window, image_file, int cols, int rows)
+    file = File.

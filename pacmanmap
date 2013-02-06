@@ -10,6 +10,7 @@ TILE 6 true
 TILE 7 true
 TILE 8 true
 TILE 9 false
+MAP
 L 0 4 4 4 4 4 4
 L 4 9 9 9 9 9 4
 L 4 9 0 4 2 9 4

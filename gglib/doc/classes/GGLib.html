@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: GGLib</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">GGLib</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/ext/themes_rb.html">
+                ext/themes.rb
+                </a>
+        <br />
+                <a href="../files/ext/widgets_rb.html">
+                ext/widgets.rb
+                </a>
+        <br />
+                <a href="../files/mouse_rb.html">
+                mouse.rb
+                </a>
+        <br />
+                <a href="../files/state_rb.html">
+                state.rb
+                </a>
+        <br />
+                <a href="../files/tile_rb.html">
+                tile.rb
+                </a>
+        <br />
+                <a href="../files/widget_rb.html">
+                widget.rb
+                </a>
+        <br />
+                <a href="../files/window_rb.html">
+                window.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="GGLib/Themes.html" class="link">GGLib::Themes</a><br />
+Class <a href="GGLib/Button.html" class="link">GGLib::Button</a><br />
+Class <a href="GGLib/CheckBox.html" class="link">GGLib::CheckBox</a><br />
+Class <a href="GGLib/Containable.html" class="link">GGLib::Containable</a><br />
+Class <a href="GGLib/Cursor.html" class="link">GGLib::Cursor</a><br />
+Class <a href="GGLib/DebugConsole.html" class="link">GGLib::DebugConsole</a><br />
+Class <a href="GGLib/DeltaCursor.html" class="link">GGLib::DeltaCursor</a><br />
+Class <a href="GGLib/FadeScreen.html" class="link">GGLib::FadeScreen</a><br />
+Class <a href="GGLib/GUIWindow.html" class="link">GGLib::GUIWindow</a><br />
+Class <a href="GGLib/Label.html" class="link">GGLib::Label</a><br />
+Class <a href="GGLib/MenuBase.html" class="link">GGLib::MenuBase</a><br />
+Class <a href="GGLib/MouseDragEvent.html" class="link">GGLib::MouseDragEvent</a><br />
+Class <a href="GGLib/RadioButton.html" class="link">GGLib::RadioButton</a><br />
+Class <a href="GGLib/RadioGroup.html" class="link">GGLib::RadioGroup</a><br />
+Class <a href="GGLib/StateObject.html" class="link">GGLib::StateObject</a><br />
+Class <a href="GGLib/TextBox.html" class="link">GGLib::TextBox</a><br />
+Class <a href="GGLib/Tile.html" class="link">GGLib::Tile</a><br />
+Class <a href="GGLib/TracePanel.html" class="link">GGLib::TracePanel</a><br />
+Class <a href="GGLib/Widget.html" class="link">GGLib::Widget</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">WidgetTextCaps</td>
+          <td>=</td>
+          <td class="context-item-value">{  &quot;,&quot;=&gt;&quot;&lt;&quot;,  &quot;.&quot;=&gt;&quot;&gt;&quot;,  &quot;/&quot;=&gt;&quot;?&quot;,  &quot;'&quot;=&gt;&quot;\&quot;&quot;,  &quot;;&quot;=&gt;&quot;:&quot;,  &quot;[&quot;=&gt;&quot;{&quot;,  &quot;]&quot;=&gt;&quot;}&quot;,  &quot;\\&quot;=&gt;&quot;|&quot;,  &quot;=&quot;=&gt;&quot;+&quot;,  &quot;-&quot;=&gt;&quot;_&quot;,  &quot;0&quot;=&gt;&quot;)&quot;,  &quot;9&quot;=&gt;&quot;(&quot;,  &quot;8&quot;=&gt;&quot;*&quot;,  &quot;7&quot;=&gt;&quot;&amp;&quot;,  &quot;6&quot;=&gt;&quot;^&quot;,  &quot;5&quot;=&gt;&quot;%&quot;,  &quot;4&quot;=&gt;&quot;$&quot;,  &quot;3&quot;=&gt;&quot;#&quot;,  &quot;2&quot;=&gt;&quot;@&quot;,  &quot;1&quot;=&gt;&quot;!&quot;,  &quot;`&quot;=&gt;&quot;~&quot;</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (GGLib::FadeScreen::FadeIn)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File gglib/state.rb, line 106</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">speed</span>=<span class="ruby-value">5</span>)
+      <span class="ruby-ivar">@image</span>=<span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">$window</span>, <span class="ruby-identifier">$gglroot</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;/media/black.bmp&quot;</span>, <span class="ruby-keyword kw">true</span>)
+      <span class="ruby-ivar">@speed</span>=<span class="ruby-identifier">speed</span>
+      <span class="ruby-ivar">@color</span>=<span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Color</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0x00ffffff</span>)
+      <span class="ruby-ivar">@alpha</span>=<span class="ruby-value">255</span>
+      <span class="ruby-keyword kw">super</span>(<span class="ruby-constant">Button</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>)
+      <span class="ruby-identifier">wakeUp</span>
+      <span class="ruby-identifier">stickFocus</span>
+      <span class="ruby-identifier">$window</span>.<span class="ruby-identifier">setFocus</span>(<span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
