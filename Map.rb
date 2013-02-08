@@ -52,6 +52,17 @@ class Map
     
     ##puts to_s
   end
+
+  def swap_tile(x, y, new_tile)
+    x_sel = (x / @tile_width).floor
+    y_sel = (y / @tile_height).floor
+
+    if (x_sel < @width and y_sel < @height) and
+        (x_sel >= 0 and y_sel >= 0) and
+        (new_tile < @tiles.length)
+      @map[y_sel][x_sel] = new_tile
+    end
+  end
   
   def draw
     ##puts to_s
@@ -63,7 +74,17 @@ class Map
       end
     end
   end
-  
+
+  # Made just for the editor
+  def draw(xoff, yoff)
+    @map.each_index do |i| 
+      @map[i].each_index do |j|
+        @tiles[Integer(@map[i][j])].image.draw(xoff + j * @tile_width,
+                                               yoff + i * @tile_height,
+                                               0)
+      end
+    end
+  end
 
   def to_s
     s = ""
@@ -94,7 +115,7 @@ class Map
       end
       return true
     end
-
+    
     if direction == "right"
       mapX = (sprite.x + sprite.vel + 32) / 16
       mapY = sprite.y / 16
@@ -103,7 +124,7 @@ class Map
       end
       return true
     end
-
+    
     if direction == "left"
       mapX = (sprite.x-2) / 16
       mapY = sprite.y / 16
