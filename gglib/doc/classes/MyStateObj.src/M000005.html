@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>onStart (MyStateObj)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File examples/CheckBoxAndRadio.rb, line 28</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">onStart</span>
+    <span class="ruby-identifier">$window</span>.<span class="ruby-identifier">setBackground</span>(<span class="ruby-value str">&quot;img/bgblue.png&quot;</span>)
+    <span class="ruby-comment cmt">#A CheckBox:</span>
+    <span class="ruby-constant">GGLib</span><span class="ruby-operator">::</span><span class="ruby-constant">CheckBox</span>.<span class="ruby-identifier">new</span>(
+      <span class="ruby-identifier">:checkbox1</span>, <span class="ruby-comment cmt">#Widget name</span>
+      <span class="ruby-value">200</span>, <span class="ruby-comment cmt">#X position</span>
+      <span class="ruby-value">200</span>, <span class="ruby-comment cmt">#Y position</span>
+      <span class="ruby-value str">&quot;Check this!&quot;</span>, <span class="ruby-comment cmt">#label</span>
+      <span class="ruby-keyword kw">false</span>, <span class="ruby-comment cmt">#Set the CheckBox to be unchecked on creation</span>
+      <span class="ruby-constant">GGLib</span><span class="ruby-operator">::</span><span class="ruby-constant">Themes</span><span class="ruby-operator">::</span><span class="ruby-constant">BlueSteel</span> <span class="ruby-comment cmt">#Use the BlueSteel theme</span>
+    )
+    <span class="ruby-comment cmt">#A RadioGroup</span>
+    <span class="ruby-constant">GGLib</span><span class="ruby-operator">::</span><span class="ruby-constant">RadioGroup</span>.<span class="ruby-identifier">new</span>(
+      <span class="ruby-identifier">:radio1</span>, <span class="ruby-comment cmt">#Widget name</span>
+      <span class="ruby-value">200</span>, <span class="ruby-comment cmt">#X position</span>
+      <span class="ruby-value">225</span>, <span class="ruby-comment cmt">#Y position</span>
+      { <span class="ruby-value str">&quot;One&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>, <span class="ruby-value str">&quot;Two&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">2</span>, <span class="ruby-value str">&quot;Three&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">3</span>}, <span class="ruby-comment cmt">#Each key in the hash is the option name and each value is the option value</span>
+      <span class="ruby-constant">GGLib</span><span class="ruby-operator">::</span><span class="ruby-constant">RadioGroup</span><span class="ruby-operator">::</span><span class="ruby-constant">Layout</span><span class="ruby-operator">::</span><span class="ruby-constant">Vertical</span>, <span class="ruby-comment cmt">#Align the tadio buttons verticaly. The other option is Layout::Horizontal</span>
+      <span class="ruby-constant">GGLib</span><span class="ruby-operator">::</span><span class="ruby-constant">RadioGroup</span><span class="ruby-operator">::</span><span class="ruby-constant">Spacing</span><span class="ruby-operator">::</span><span class="ruby-constant">Automatic</span>, <span class="ruby-comment cmt">#Set the spacing between radio buttons to be automatically sized. (You can supply your own spacing by passing an integer here.)</span>
+      <span class="ruby-constant">GGLib</span><span class="ruby-operator">::</span><span class="ruby-constant">Themes</span><span class="ruby-operator">::</span><span class="ruby-constant">BlueSteel</span> <span class="ruby-comment cmt">#Use the BlueSteel theme</span>
+    )
+
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

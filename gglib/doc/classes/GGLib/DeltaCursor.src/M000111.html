@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (GGLib::DeltaCursor)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File mouse.rb, line 102</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">img</span>,<span class="ruby-identifier">visible</span>=<span class="ruby-keyword kw">true</span>)
+      <span class="ruby-ivar">@img</span>=<span class="ruby-identifier">img</span>
+      <span class="ruby-ivar">@visible</span>=<span class="ruby-identifier">visible</span>
+      <span class="ruby-ivar">@imgObj</span>=<span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">$window</span>,<span class="ruby-identifier">img</span>,<span class="ruby-keyword kw">true</span>)
+      <span class="ruby-ivar">@forced</span>=<span class="ruby-keyword kw">false</span>
+      <span class="ruby-ivar">@centerx</span> = (<span class="ruby-identifier">$window</span>.<span class="ruby-identifier">width</span><span class="ruby-operator">/</span><span class="ruby-value">2</span>).<span class="ruby-identifier">floor</span>
+      <span class="ruby-ivar">@centery</span> = (<span class="ruby-identifier">$window</span>.<span class="ruby-identifier">height</span><span class="ruby-operator">/</span><span class="ruby-value">2</span>).<span class="ruby-identifier">floor</span>
+      <span class="ruby-ivar">@ax</span> = <span class="ruby-value">0</span>
+      <span class="ruby-ivar">@ay</span> = <span class="ruby-value">0</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

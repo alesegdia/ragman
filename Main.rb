@@ -52,7 +52,7 @@ class GameWindow < Gosu::Window
   
   def draw
     #@sprite.draw
-    @map.draw
+    @map.draw(0,0)
   end
 
   def button_down(id)

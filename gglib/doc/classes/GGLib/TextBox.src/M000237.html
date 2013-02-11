@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (GGLib::TextBox)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File ext/widgets.rb, line 239</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>, <span class="ruby-identifier">len</span>=<span class="ruby-value">12</span>, <span class="ruby-identifier">theme</span>=<span class="ruby-constant">Themes</span><span class="ruby-operator">::</span><span class="ruby-identifier">blank</span>, <span class="ruby-identifier">w</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">height</span>=<span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">width!</span>=<span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">height!</span>=<span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>, <span class="ruby-identifier">x</span><span class="ruby-operator">+</span><span class="ruby-identifier">w</span>, <span class="ruby-identifier">y</span><span class="ruby-operator">+</span><span class="ruby-identifier">h</span>, <span class="ruby-identifier">theme</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-ivar">@theme</span> = <span class="ruby-identifier">theme</span>.<span class="ruby-identifier">newInstance</span>(<span class="ruby-keyword kw">self</span>) <span class="ruby-comment cmt">#Get specialized instance early</span>
+      <span class="ruby-ivar">@theme</span>.<span class="ruby-identifier">setCoords</span>(<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>) 
+      <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>, <span class="ruby-identifier">x</span><span class="ruby-operator">+</span><span class="ruby-ivar">@theme</span>.<span class="ruby-identifier">width</span>, <span class="ruby-identifier">y</span><span class="ruby-operator">+</span><span class="ruby-ivar">@theme</span>.<span class="ruby-identifier">height</span>, <span class="ruby-identifier">theme</span>)
+      <span class="ruby-ivar">@theme</span>.<span class="ruby-identifier">setCoords</span>(<span class="ruby-ivar">@x1</span>, <span class="ruby-ivar">@y1</span>, <span class="ruby-ivar">@x2</span>, <span class="ruby-ivar">@y2</span>)
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-ivar">@textinput</span>=<span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">TextInput</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@offsety</span>=((<span class="ruby-ivar">@theme</span>.<span class="ruby-identifier">height</span><span class="ruby-operator">-</span><span class="ruby-ivar">@theme</span>.<span class="ruby-identifier">font</span>.<span class="ruby-identifier">editable</span>.<span class="ruby-identifier">height</span>)<span class="ruby-operator">/</span><span class="ruby-value">2</span>).<span class="ruby-identifier">floor</span>
+    <span class="ruby-ivar">@maxlength</span>=<span class="ruby-identifier">len</span>
+    <span class="ruby-ivar">@x</span>=<span class="ruby-identifier">x</span>
+    <span class="ruby-ivar">@y</span>=<span class="ruby-identifier">y</span>
+    <span class="ruby-ivar">@drawcursor</span>=<span class="ruby-value">0</span>
+    <span class="ruby-ivar">@realwidth</span>=<span class="ruby-ivar">@x</span> <span class="ruby-operator">+</span> <span class="ruby-constant">TextPadding</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

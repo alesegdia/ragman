@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>del (GGLib::Widget)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File gglib/widget.rb, line 162</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">del</span>
+    <span class="ruby-identifier">onDelete</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$window</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Window assigned to nil&quot;</span> <span class="ruby-comment cmt">#Very strange bug. Should be dead by now. (This is just in case.)</span>
+      <span class="ruby-keyword kw">return</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">$window</span>.<span class="ruby-identifier">deleteWidget</span>(<span class="ruby-keyword kw">self</span>)
+    <span class="ruby-keyword kw">super</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

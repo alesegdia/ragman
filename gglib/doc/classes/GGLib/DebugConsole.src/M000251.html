@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>onKeyUp (GGLib::DebugConsole)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File ext/widgets.rb, line 22</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">onKeyUp</span>(<span class="ruby-identifier">key</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span><span class="ruby-operator">==</span><span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Button</span><span class="ruby-operator">::</span><span class="ruby-constant">KbDelete</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">key</span><span class="ruby-operator">==</span><span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Button</span><span class="ruby-operator">::</span><span class="ruby-constant">KbBackspace</span>
+      <span class="ruby-identifier">thisline</span>=<span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>]
+      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@textm</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">thisline</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>
+        <span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>]=<span class="ruby-identifier">thisline</span>.<span class="ruby-identifier">slice</span>(<span class="ruby-value">0</span>,<span class="ruby-identifier">thisline</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">thisline</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">&gt;</span><span class="ruby-value">3</span>
+        <span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>]=<span class="ruby-identifier">thisline</span>.<span class="ruby-identifier">slice</span>(<span class="ruby-value">0</span>,<span class="ruby-identifier">thisline</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">key</span><span class="ruby-operator">==</span><span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Button</span><span class="ruby-operator">::</span><span class="ruby-constant">KbEscape</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">$window</span>.<span class="ruby-identifier">button_id_to_char</span>(<span class="ruby-identifier">key</span>) <span class="ruby-operator">==</span> <span class="ruby-value str">'`'</span>
+      <span class="ruby-identifier">sleep</span>
+    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">key</span><span class="ruby-operator">==</span><span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Button</span><span class="ruby-operator">::</span><span class="ruby-constant">KbReturn</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">key</span><span class="ruby-operator">==</span><span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Button</span><span class="ruby-operator">::</span><span class="ruby-constant">KbEnter</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@textm</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>]<span class="ruby-operator">==</span><span class="ruby-value str">&quot;/endtext&quot;</span>
+          <span class="ruby-ivar">@textm</span>=<span class="ruby-keyword kw">false</span>
+          <span class="ruby-ivar">@line</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>
+          <span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>]=<span class="ruby-value str">&quot;&gt;&gt; &quot;</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-ivar">@line</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>
+          <span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>]=<span class="ruby-value str">&quot;&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">return</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-ivar">@oldtext</span>.<span class="ruby-identifier">push</span> <span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>]
+      <span class="ruby-identifier">cmd</span>=<span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>].<span class="ruby-identifier">slice</span>(<span class="ruby-value">3</span>,<span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>].<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">3</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">slice</span>(<span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">-</span><span class="ruby-value">3</span>,<span class="ruby-value">3</span>)<span class="ruby-operator">==</span><span class="ruby-value str">&quot;/nl&quot;</span>
+        <span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>]=<span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>].<span class="ruby-identifier">slice</span>(<span class="ruby-value">0</span>,<span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>].<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">3</span>)
+        <span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>]=<span class="ruby-value str">&quot;|&gt; &quot;</span>
+        <span class="ruby-ivar">@line</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">runcmd</span>(<span class="ruby-identifier">cmd</span>)
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-ivar">@vline</span>=<span class="ruby-ivar">@oldtext</span>.<span class="ruby-identifier">size</span>
+    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">key</span><span class="ruby-operator">==</span><span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Button</span><span class="ruby-operator">::</span><span class="ruby-constant">KbUp</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@vline</span><span class="ruby-operator">-</span><span class="ruby-value">1</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">and</span> 
+        <span class="ruby-ivar">@vline</span><span class="ruby-operator">-=</span><span class="ruby-value">1</span>
+        <span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>]=<span class="ruby-ivar">@oldtext</span>[<span class="ruby-ivar">@vline</span>]
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">key</span><span class="ruby-operator">==</span><span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-constant">Button</span><span class="ruby-operator">::</span><span class="ruby-constant">KbDown</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@vline</span><span class="ruby-operator">+</span><span class="ruby-value">1</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@oldtext</span>.<span class="ruby-identifier">size</span> <span class="ruby-keyword kw">and</span> 
+        <span class="ruby-ivar">@vline</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>
+        <span class="ruby-ivar">@text</span>[<span class="ruby-ivar">@line</span>]=<span class="ruby-ivar">@oldtext</span>[<span class="ruby-ivar">@vline</span>]
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

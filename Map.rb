@@ -3,8 +3,8 @@ require 'gosu'
 
 class Tile
   attr_reader :image
-  
-  def initialize(solid, image)
+
+  def initialize(image, solid)
     @solid = solid
     @image = image
   end
@@ -12,46 +12,114 @@ class Tile
   def is_solid?
     @solid
   end
+
 end
 
+MapInfo = Struct.new(:tile_width, :tile_height,
+                     :map_width, :map_height, :tiles_img)
+
 class Map
-  attr_reader :map, :tile_width, :tile_height
-  def initialize(window, map_path)
-    
-    # Load file, size and array map
-    file = File.new(map_path, "r")
-    @tile_width, @tile_height, @width, @height =
-      file.gets.split(' ').drop(1).collect! { |x| Integer(x) }
-    
-    @map = Array.new(Integer(@height)) { Array.new(Integer(@width)) }
-    
-    # Load tiles
-    tile_images = Gosu::Image::load_tiles(window,
-                                          file.gets.chomp,
-                                          @tile_width,
-                                          @tile_height,
-                                          false)
-    
-    @tiles = Array.new(tile_images.size)
-    while (line = file.gets and
-           line =~ /^TILE.*/)
-      args = line.split(' ')
-      id, solid = Integer(args[1]), args[2]
-      solidity = (solid == "true") ? true : false
-      @tiles[id] = Tile.new(solidity, tile_images[id])
-      puts "tile created! #{id}"
-      puts @tiles[id].is_solid?
+  attr_reader :map, :tilesheet
+  
+  def initialize(window, *rest)
+    if rest.size == 6 then
+      puts "6 args!"
+      # Create new empty map
+
+      @tile_width, @tile_height = rest[0], rest[1]
+      @width, @height = rest[2], rest[3]
+      default_tile = rest[4]
+      @tilesheet = rest[5]
+      
+      # Init map
+      @map = Array.new(@height) { |i| Array.new(@width) { |i| default_tile } }
+      
+      # Init tiles
+      @tiles = Hash.new
+      spliced_tsheet = Gosu::Image::load_tiles(window,
+                                               @tilesheet,
+                                               @tile_width,
+                                               @tile_height,
+                                               false)
+      spliced_tsheet.each_index { |i| add_tile(i, spliced_tsheet[i], false) }
+      # @tiles[i] = Tile.new(tile_images[i], false)
+      
+    elsif rest.size == 1 then
+      # Loading from file
+      puts "catcha"
+      # Load file, size and array map
+      file = File.new(rest[0], "r")
+      @tile_width, @tile_height, @width, @height =
+        file.gets.split(' ').drop(1).collect! { |x| Integer(x) }
+      
+      @map = Array.new(Integer(@height)) { Array.new(Integer(@width)) }
+      
+      # Load tiles
+      @tiles = Hash.new
+      tile_images = Gosu::Image::load_tiles(window,
+                                            file.gets.chomp,
+                                            @tile_width,
+                                            @tile_height,
+                                            false)
+      
+      while (line = file.gets and
+             line =~ /^TILE.*/)
+        
+        # Parse lines
+        args = line.split(' ')
+        id, solid = Integer(args[1]), args[2]
+        solidity = (solid == "true") ? true : false
+        
+        # Add tile to list
+        add_tile(id, tile_images[id], solidity)
+        puts "tile created! #{id}"
+        #puts @tiles.at(id).is_solid?
+      end
+      
+      
+      # Load map
+      i = 0
+      begin
+        @map[i] = line.split(' ').drop(1).collect! { |x| Integer(x) }
+        i += 1
+      end while(line = file.gets)
     end
-    
-    # Load map
-    i = 0
-    begin
-      @map[i] = line.split(' ').drop(1).collect! { |x| Integer(x) }
-      i += 1
-    end while (line = file.gets)
-    
-    ##puts to_s
   end
+  ##puts to_s
+  
+  def map_info
+    Struct::MapInfo.new(@tile_width, @tile_height,
+                        @map_width, @map_height, @tiles_img)
+  end
+  
+  def load_file(path)
+    
+  end
+
+  def save_file(path)
+    File.
+    file += "TILESIZE #{@tile_width} #{@tile_height}\n"
+    file += "TILEIMG #{@tile_img}"
+    @tiles.each { |key,val| file += "TILE #{key} #{(val.is_solid?) ? 'true' : 'false'}" }
+    
+    @map.each_index { |i|
+      file += "T "
+      @map[i].each { |elem|
+        file += "#{elem} "
+      }
+      file += "\n"
+    }
+    
+  end
+
+  def add_tile (id, image, solid)
+    @tiles[id] = Tile.new(image, solid)
+  end
+
+  #def add_tile (id, solid)
+  #  @tiles[id] = Tile.new(@tile_images[id], solid)
+  #end
+                         
 
   def swap_tile(x, y, new_tile)
     x_sel = (x / @tile_width).floor
@@ -60,7 +128,7 @@ class Map
     if (x_sel < @width and y_sel < @height) and
         (x_sel >= 0 and y_sel >= 0) and
         (new_tile < @tiles.length)
-      @map[y_sel][x_sel] = new_tile
+      @map[y_sel][x_sel] = String(new_tile)
     end
   end
   

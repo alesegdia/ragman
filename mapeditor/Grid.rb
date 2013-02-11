@@ -15,7 +15,7 @@ class Grid
                                      false)
     @x_size = cols * @tile_width
     @y_size = (@images.length / cols).ceil * @tile_height
-    @selected = Array.new(2)
+    @selected = Array.new(2) { |i| 0 }
   end
   
   def draw(xoff,yoff)

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>update (GGLib::GUIWindow)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File window.rb, line 179</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>
+    <span class="ruby-identifier">checkFocus</span>
+    
+    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@leftdrag</span>.<span class="ruby-identifier">starting</span>
+      <span class="ruby-keyword kw">if</span>(<span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-identifier">distance</span>(<span class="ruby-ivar">@leftdrag</span>.<span class="ruby-identifier">start_x</span>, <span class="ruby-ivar">@leftdrag</span>.<span class="ruby-identifier">start_y</span>, <span class="ruby-identifier">mouse_x</span>, <span class="ruby-identifier">mouse_y</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">5</span>)
+        <span class="ruby-ivar">@leftdrag</span>.<span class="ruby-identifier">confirmStart</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@rightdrag</span>.<span class="ruby-identifier">starting</span>
+      <span class="ruby-keyword kw">if</span>(<span class="ruby-constant">Gosu</span><span class="ruby-operator">::</span><span class="ruby-identifier">distance</span>(<span class="ruby-ivar">@rightdrag</span>.<span class="ruby-identifier">start_x</span>, <span class="ruby-ivar">@rightdrag</span>.<span class="ruby-identifier">start_y</span>, <span class="ruby-identifier">mouse_x</span>, <span class="ruby-identifier">mouse_y</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">5</span>)
+        <span class="ruby-ivar">@rightdrag</span>.<span class="ruby-identifier">confirmStart</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@timer</span><span class="ruby-operator">&gt;</span><span class="ruby-value">100</span>
+      <span class="ruby-ivar">@timer</span>=<span class="ruby-value">0</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-ivar">@timer</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-ivar">@state</span>.<span class="ruby-identifier">update</span>
+    <span class="ruby-ivar">@framedrawn</span> = <span class="ruby-keyword kw">false</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
