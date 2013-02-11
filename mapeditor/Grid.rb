@@ -23,7 +23,7 @@ class Grid
     @images.each do |image|
       image.draw(xoff + i * @tile_width,
                  yoff + j * @tile_height,
-                 0)
+                 2)
       i = (i+1) % @cols
       if (i == 0)
         j += 1
@@ -45,9 +45,9 @@ class Grid
               left, top, color,
               right, top, color,
               left, bot, color,
-              right, bot, color, 1)
+              right, bot, color, 2)
     @images[selected[0] + selected[1]*@cols].draw(xoff + selected[0] * @tile_width,
-                                                 yoff + selected[1] * @tile_height, 1)
+                                                 yoff + selected[1] * @tile_height, 2)
   end
 
   def select(mouse_x, mouse_y)

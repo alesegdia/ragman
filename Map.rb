@@ -138,7 +138,7 @@ class Map
       @map[i].each_index do |j|
         @tiles[Integer(@map[i][j])].image.draw(j * @tile_width,
                                                i * @tile_height,
-                                               0)
+                                               1)
       end
     end
   end
@@ -149,7 +149,7 @@ class Map
       @map[i].each_index do |j|
         @tiles[Integer(@map[i][j])].image.draw(xoff + j * @tile_width,
                                                yoff + i * @tile_height,
-                                               0)
+                                               2)
       end
     end
   end
