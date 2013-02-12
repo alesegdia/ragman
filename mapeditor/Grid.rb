@@ -8,6 +8,7 @@ class Grid
     @cols = cols
     @tile_width, @tile_height = tile_width, tile_height
     @window = window
+    puts image_file
     @images = Gosu::Image::load_tiles(window,
                                      image_file,
                                      tile_width,

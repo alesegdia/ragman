@@ -19,16 +19,19 @@ MapInfo = Struct.new(:tile_width, :tile_height,
                      :map_width, :map_height, :tiles_img)
 
 class Map
-  attr_reader :map, :tilesheet
+  attr_reader :map, :tilesheet, :tile_width, :tile_height, :width, :height
   
   def initialize(window, *rest)
+    @window = window
     if rest.size == 6 then
       puts "6 args!"
       # Create new empty map
-
+      
+      
       @tile_width, @tile_height = rest[0], rest[1]
       @width, @height = rest[2], rest[3]
       default_tile = rest[4]
+      puts rest[5]
       @tilesheet = rest[5]
       
       # Init map
@@ -45,56 +48,55 @@ class Map
       # @tiles[i] = Tile.new(tile_images[i], false)
       
     elsif rest.size == 1 then
-      # Loading from file
-      puts "catcha"
-      # Load file, size and array map
-      file = File.new(rest[0], "r")
-      @tile_width, @tile_height, @width, @height =
-        file.gets.split(' ').drop(1).collect! { |x| Integer(x) }
-      
-      @map = Array.new(Integer(@height)) { Array.new(Integer(@width)) }
-      
-      # Load tiles
-      @tiles = Hash.new
-      tile_images = Gosu::Image::load_tiles(window,
-                                            file.gets.chomp,
-                                            @tile_width,
-                                            @tile_height,
-                                            false)
-      
-      while (line = file.gets and
-             line =~ /^TILE.*/)
-        
-        # Parse lines
-        args = line.split(' ')
-        id, solid = Integer(args[1]), args[2]
-        solidity = (solid == "true") ? true : false
-        
-        # Add tile to list
-        add_tile(id, tile_images[id], solidity)
-        puts "tile created! #{id}"
-        #puts @tiles.at(id).is_solid?
-      end
-      
-      
-      # Load map
-      i = 0
-      begin
-        @map[i] = line.split(' ').drop(1).collect! { |x| Integer(x) }
-        i += 1
-      end while(line = file.gets)
+      load_file(ARGV[0])
     end
   end
-  ##puts to_s
-  
+
   def map_info
     Struct::MapInfo.new(@tile_width, @tile_height,
                         @map_width, @map_height, @tiles_img)
   end
   
   def load_file(path)
+    # Load file, size and array map
+    file = File.new(path, "r")
+    @tile_width, @tile_height, @width, @height =
+      file.gets.split(' ').drop(1).collect! { |x| Integer(x) }
     
-  end
+    @map = Array.new(Integer(@height)) { Array.new(Integer(@width)) }
+    
+    # Load tiles
+    @tiles = Hash.new
+    @tilesheet = file.gets.chomp
+    tile_images = Gosu::Image::load_tiles(@window,
+                                          @tilesheet,
+                                          @tile_width,
+                                          @tile_height,
+                                          false)
+    
+    while (line = file.gets and
+           line =~ /^TILE.*/)
+      
+      # Parse lines
+      args = line.split(' ')
+      id, solid = Integer(args[1]), args[2]
+      solidity = (solid == "true") ? true : false
+      
+      # Add tile to list
+      add_tile(id, tile_images[id], solidity)
+      puts "tile created! #{id}"
+      #puts @tiles.at(id).is_solid?
+    end
+    
+    
+    # Load map
+    i = 0
+    begin
+      @map[i] = line.split(' ').drop(1).collect! { |x| Integer(x) }
+      i += 1
+    end while(line = file.gets)
+  end  
+
 
   def save_file(path)
     File.
@@ -115,11 +117,6 @@ class Map
   def add_tile (id, image, solid)
     @tiles[id] = Tile.new(image, solid)
   end
-
-  #def add_tile (id, solid)
-  #  @tiles[id] = Tile.new(@tile_images[id], solid)
-  #end
-                         
 
   def swap_tile(x, y, new_tile)
     x_sel = (x / @tile_width).floor

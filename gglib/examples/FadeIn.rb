@@ -25,7 +25,7 @@ end
 #The menu we will fade from
 class StartMenu < GGLib::StateObject
   def onStart
-    $window.setBackground("img/splash.png")
+    ##$window.setBackground("img/splash.png")
     GGLib::Button.new(:fade, "Fade", 270, 200, Proc.new{ |widget| $window.state = GGLib::FadeScreen.new(EndMenu.new, 2) }, GGLib::Themes::BlueSteel)
   end
 end
