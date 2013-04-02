@@ -163,42 +163,58 @@ class Map
   end
   
   def is_possible_movement(sprite, direction)
+  	# OK!
     if direction == "up"
       mapX = sprite.x / 16
       mapY = (sprite.y - sprite.vel) / 16
       if @tiles[@map[mapY][mapX]].is_solid?
         return false
       end
-      return true
+       if sprite.x < mapX * sprite.width and @tiles[@map[mapX+1][mapY]].is_solid?
+		return false
+      end
+     return true
     end
 
     if direction == "down"
       mapX = sprite.x / 16
-      mapY = (sprite.y + sprite.vel + 32) / 16
+      mapY = (sprite.y + sprite.vel+ 16) / 16
       if @tiles[@map[mapY][mapX]].is_solid?
         return false
       end
+      if sprite.x < mapX * sprite.width and @tiles[@map[mapX+1][mapY]].is_solid?
+		return false
+      end
+
       return true
     end
     
     if direction == "right"
-      mapX = (sprite.x + sprite.vel + 32) / 16
+      mapX = (sprite.x + sprite.vel+ 16) / 16
       mapY = sprite.y / 16
       if @tiles[@map[mapY][mapX]].is_solid?
         return false
       end
+      if sprite.y < mapY * height and @tiles[@map[mapX][mapY+1]].is_solid?
+		return false
+      end
+
       return true
     end
-    
+
+    # OK!
     if direction == "left"
-      mapX = (sprite.x-2) / 16
+      mapX = (sprite.x - sprite.vel) / 16
       mapY = sprite.y / 16
-      if @tiles[@map[mapY][mapX]].is_solid?
+
+	  if @tiles[@map[mapY][mapX]].is_solid?
         return false
+      end
+      if sprite.y < mapY * height and @tiles[@map[mapX][mapY+1]].is_solid?
+		return false
       end
       return true
     end
   end
-  
 end
 

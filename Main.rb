@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require './Sprite'
-require './Map'
+require './Map.rb'
 require 'rubygems'
 require 'gosu'
 
@@ -12,20 +12,25 @@ class GameWindow < Gosu::Window
 
     @bgcolor = Gosu::Color.new(255,255,255,255)
 
-    #@sprite = Sprite.new(self, 200);
+    @sprite = Sprite.new(self, 200, "pcm_all.png", 16, 16);
+
+	@sprite.add_anim("right", 0, 4);
+	@sprite.add_anim("left", 4, 4);
+	@sprite.add_anim("up", 8, 4);
+	@sprite.add_anim("down", 12, 4);
     #@sprite.add_anim("anims/sw_front.png", "down", 32, 32);
     #@sprite.add_anim("anims/sw_right.png", "right", 32, 32);
     #@sprite.add_anim("anims/sw_left.png", "left", 32, 32);
     #@sprite.add_anim("anims/sw_back.png", "up", 32, 32);
-    #@sprite.set_anim("up")
-    #@sprite.warp(20, 40)
+    @sprite.set_anim("right")
+    @sprite.warp(80, 16)
 
-    @map = Map.new(self, "pacmanmap")
+    @map = Map.new(self, ARGV[0])
 
   end
 
   def update
-=begin
+
     if button_down? Gosu::KbUp then
       @sprite.set_anim("up")
       if @map.is_possible_movement(@sprite, "up")
@@ -47,12 +52,12 @@ class GameWindow < Gosu::Window
         @sprite.move_right
       end
     end
-=end
+
   end
-  
+
   def draw
-    #@sprite.draw
-    @map.draw(0,0)
+    @map.draw(45,45)
+    @sprite.draw
   end
 
   def button_down(id)
@@ -60,7 +65,7 @@ class GameWindow < Gosu::Window
       close
     end
   end
-  
+
   def draw_background
 	draw_quad(
 	    0,   0, @bgcolor,

@@ -2,29 +2,45 @@
 require 'rubygems'
 require 'gosu'
 
+def getFrames(window, path, first, howMuch, width, height)
+	#return(Gosu::Image::load_tiles(@window, path, width, height, false)).drop(first).take(howMuch);
+end
+
 class Sprite
-  attr_reader :x, :y, :vel
-  def initialize(window, speed)
+  attr_reader :x, :y, :vel, :width, :height
+  def initialize(window, speed, spritesheet, width, height)
     @window = window
     @speed = speed
     @x = @y = 0
     @animations = Hash.new
     @speed = speed
+    @width = width
+    @height = height
+
+	load_spritesheet(spritesheet, width, height)
+
     @current_anim
-    @vel = 2
+    @vel = 1
   end
 
   def draw
     frame = @current_anim[Gosu::milliseconds / @speed % @current_anim.size]
-    frame.draw(@x, @y, 1)
+    frame.draw(@x, @y, 4)
   end
 
-  def add_anim(filepath, anim_name, width, height)
-    @animations[anim_name] = Gosu::Image::load_tiles(@window,
-                               filepath,
-                               width,
-                               height,
-                               false);
+  def load_spritesheet(filepath, width, height)
+  	  @spritesheet = Gosu::Image::load_tiles(@window, filepath, width, height, false)
+
+  end
+
+  # PRE: load_spritesheet success
+  def add_anim(anim_name, first, howMuch)
+    @animations[anim_name] = @spritesheet.drop(first).take(howMuch)
+#    @animations[anim_name] = Gosu::Image::load_tiles(@window,
+#                               filepath,
+#                               width,
+#                               height,
+#                               false);
   end
 
   def set_anim(name)
