@@ -23,40 +23,77 @@ class GameWindow < Gosu::Window
     #@sprite.add_anim("anims/sw_left.png", "left", 32, 32);
     #@sprite.add_anim("anims/sw_back.png", "up", 32, 32);
     @sprite.set_anim("right")
-    @sprite.warp(80, 16)
+    @sprite.warp(80, 80)
 
     @map = Map.new(self, ARGV[0])
 
   end
 
   def update
+	correccionX = @sprite.x - ((@sprite.x).floor/16)*16
+	correccionY = @sprite.y - ((@sprite.y).floor/16)*16
+	tolerancia = 8
 
     if button_down? Gosu::KbUp then
       @sprite.set_anim("up")
-      if @map.is_possible_movement(@sprite, "up")
+      if @map.is_possible_movement("up",
+      		@sprite.x, @sprite.y-@sprite.vel-tolerancia,tolerancia)
+      	  correccionY != 0
         @sprite.move_up
+        if correccionX != 0
+        if correccionX.abs >= 8
+          @sprite.x = @sprite.x + 1
+        else
+          @sprite.x = @sprite.x - 1
+		end
+		end
       end
     elsif button_down? Gosu::KbDown then
       @sprite.set_anim("down")
-      if @map.is_possible_movement(@sprite, "down")
+      if @map.is_possible_movement("down",
+      		@sprite.x, @sprite.y+@sprite.vel+tolerancia,tolerancia)
         @sprite.move_down
+
+        if correccionX != 0
+        if correccionX.abs >= 8
+          @sprite.x = @sprite.x + 1
+        else
+          @sprite.x = @sprite.x - 1
+		end
+		end
+
       end
     elsif button_down? Gosu::KbLeft then
       @sprite.set_anim("left")
-      if @map.is_possible_movement(@sprite, "left")
+      if @map.is_possible_movement("left",
+      		@sprite.x-@sprite.vel-tolerancia,@sprite.y,tolerancia)
         @sprite.move_left
+        if correccionY != 0
+        if correccionY.abs >= 8
+          @sprite.y = @sprite.y + 1
+        else
+          @sprite.y = @sprite.y - 1
+		end
+		end
       end
     elsif button_down? Gosu::KbRight then
       @sprite.set_anim("right")
-      if @map.is_possible_movement(@sprite, "right")
+      if @map.is_possible_movement("right",
+      		@sprite.x+@sprite.vel+tolerancia,@sprite.y,tolerancia)
         @sprite.move_right
+        if correccionY != 0
+        if correccionY.abs >= 8
+          @sprite.y = @sprite.y + 1
+        else
+          @sprite.y = @sprite.y - 1
+		end
+		end
       end
     end
-
   end
 
   def draw
-    @map.draw(45,45)
+    @map.draw
     @sprite.draw
   end
 

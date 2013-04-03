@@ -56,7 +56,7 @@ class EditionState < GGLib::StateObject
   end
 
   def draw
-    @map.draw(@map_xoff, @map_yoff)
+    @map.draw_offset(@map_xoff, @map_yoff)
 
     c1 = Gosu::Color.new(0x90803333)
     c2 = Gosu::Color.new(0xADFADE00)

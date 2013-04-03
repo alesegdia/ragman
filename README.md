@@ -1,4 +1,5 @@
 TODO:
+* Finish class diagram and refactor EVERYTHING
 * Contact the GGLib owner to talk about the FadeScreen bug. Thank him so much for making this lib and make my life easier
 * Code map editor's save screen and test Map::save_file()
 * Code map editor's new map screen asking for parameters in TextBox'es.
@@ -8,11 +9,12 @@ TODO:
 * Fix the horrible map file format, please
 * Test paths in file formats, so that you can load everything everywhere, and not to have every map all over the source tree.
 * Add GUIs to map editor for creating, saving and loading. [33.3%]
-* Put a bit of order in ZOrder.
+* Put a bit of order in ZOrder. ---> IMPORTANT!!
 * Get a beer.
 
 
 ACHIEVED:
+* Tested pacman sprite and fine collisions achieved
 * 2 ways to make a Map. From zero and from a file
 * Command line help and stuff. Two ways to launch the map editor (specify map data by params or specify just one file). Three in the future (add calling the mapeditor without args, splashing to create new map).
 * Basic interface with GGLib::StateObject switching and a nice background

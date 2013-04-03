@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'gosu'
-
 class Tile
   attr_reader :image
 
@@ -26,14 +25,13 @@ class Map
     if rest.size == 6 then
       puts "6 args!"
       # Create new empty map
-      
-      
-      @tile_width, @tile_height = rest[0], rest[1]
+
+	  @tile_width, @tile_height = rest[0], rest[1]
       @width, @height = rest[2], rest[3]
       default_tile = rest[4]
       puts rest[5]
       @tilesheet = rest[5]
-      
+
       # Init map
       @map = Array.new(@height) { |i| Array.new(@width) { |i| default_tile } }
       
@@ -87,23 +85,21 @@ class Map
       puts "tile created! #{id}"
       #puts @tiles.at(id).is_solid?
     end
-    
-    
+
+
     # Load map
     i = 0
     begin
       @map[i] = line.split(' ').drop(1).collect! { |x| Integer(x) }
       i += 1
     end while(line = file.gets)
-  end  
-
+  end
 
   def save_file(path)
-    File.
     file += "TILESIZE #{@tile_width} #{@tile_height}\n"
     file += "TILEIMG #{@tile_img}"
     @tiles.each { |key,val| file += "TILE #{key} #{(val.is_solid?) ? 'true' : 'false'}" }
-    
+
     @map.each_index { |i|
       file += "T "
       @map[i].each { |elem|
@@ -111,7 +107,7 @@ class Map
       }
       file += "\n"
     }
-    
+
   end
 
   def add_tile (id, image, solid)
@@ -141,7 +137,7 @@ class Map
   end
 
   # Made just for the editor
-  def draw(xoff, yoff)
+  def draw_offset(xoff, yoff)
     @map.each_index do |i| 
       @map[i].each_index do |j|
         @tiles[Integer(@map[i][j])].image.draw(xoff + j * @tile_width,
@@ -162,40 +158,69 @@ class Map
     s
   end
   
-  def is_possible_movement(sprite, direction)
-  	# OK!
-    if direction == "up"
-      mapX = sprite.x / 16
-      mapY = (sprite.y - sprite.vel) / 16
-      if @tiles[@map[mapY][mapX]].is_solid?
+  def is_solid?(x, y)
+	return @tiles[@map[x][y]].is_solid?
+  end
+
+=begin
+  def populate_collidable(bounds)
+    startX = bounds.x
+    startY = bounds.y
+    endX = bounds.x + bounds.w
+    endY = bounds.y + bounds.h
+	x = startX
+	y = startY
+	until x > endX do
+	  until y > endY do
+	  	@collidable << Rect.new( x/16 + 
+	  x = x + 16
+	(startX..endX).each do |x|
+	  (startY..endY).each do |y|
+	  	
+	  end
+	end
+  end
+=end
+
+  def give_my_corners(x, y, sprite)
+  	upY = (sprite.y / 16)
+  	downY = (sprite.y + 15) / 16
+  	rightX = 1
+  	leftX = 1
+  end
+
+  def is_possible_movement(direction, newX, newY, tolerancia)
+  	upY =    ((newY + tolerancia) / 16).floor
+  	downY =  ((newY + 15 - tolerancia) / 16).floor
+  	leftX =  ((newX + tolerancia)/ 16).floor
+  	rightX = ((newX + 15 - tolerancia) / 16).floor
+
+	if direction == "up"
+      if @tiles[@map[upY][leftX]].is_solid?
         return false
       end
-       if sprite.x < mapX * sprite.width and @tiles[@map[mapX+1][mapY]].is_solid?
+      if @tiles[@map[upY][rightX]].is_solid?
 		return false
       end
-     return true
+	  return true
     end
 
     if direction == "down"
-      mapX = sprite.x / 16
-      mapY = (sprite.y + sprite.vel+ 16) / 16
-      if @tiles[@map[mapY][mapX]].is_solid?
+      if @tiles[@map[downY][leftX]].is_solid?
         return false
       end
-      if sprite.x < mapX * sprite.width and @tiles[@map[mapX+1][mapY]].is_solid?
+      if @tiles[@map[downY][rightX]].is_solid?
 		return false
       end
 
       return true
     end
-    
+
     if direction == "right"
-      mapX = (sprite.x + sprite.vel+ 16) / 16
-      mapY = sprite.y / 16
-      if @tiles[@map[mapY][mapX]].is_solid?
+      if @tiles[@map[upY][rightX]].is_solid?
         return false
       end
-      if sprite.y < mapY * height and @tiles[@map[mapX][mapY+1]].is_solid?
+      if @tiles[@map[downY][rightX]].is_solid?
 		return false
       end
 
@@ -204,13 +229,10 @@ class Map
 
     # OK!
     if direction == "left"
-      mapX = (sprite.x - sprite.vel) / 16
-      mapY = sprite.y / 16
-
-	  if @tiles[@map[mapY][mapX]].is_solid?
+	  if @tiles[@map[downY][leftX]].is_solid?
         return false
       end
-      if sprite.y < mapY * height and @tiles[@map[mapX][mapY+1]].is_solid?
+      if @tiles[@map[upY][leftX]].is_solid?
 		return false
       end
       return true

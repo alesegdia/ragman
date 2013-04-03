@@ -7,7 +7,7 @@ def getFrames(window, path, first, howMuch, width, height)
 end
 
 class Sprite
-  attr_reader :x, :y, :vel, :width, :height
+  attr_accessor :x, :y, :vel, :width, :height
   def initialize(window, speed, spritesheet, width, height)
     @window = window
     @speed = speed
