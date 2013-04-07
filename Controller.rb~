@@ -1,0 +1,8 @@
+require 'rubygems'
+require 'gosu'
+
+class Controller
+  def initialize(pacman, map)
+    @pacman = pacman
+    @map = map
+

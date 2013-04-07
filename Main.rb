@@ -1,11 +1,27 @@
 #!/usr/bin/env ruby
 
-require './Sprite'
-require './Map.rb'
+require 'Sprite'
+require 'Map'
+require 'HumanController'
+require 'AIController'
+require 'Behaviour'
 require 'rubygems'
 require 'gosu'
+require 'Direction'
+
+def norm(a, b)
+  return (a/b).floor
+end
 
 class GameWindow < Gosu::Window
+
+	# METHODS:
+	#  initialize
+	#  update
+	#  draw
+	#  button_down?
+	#  draw_background
+
   def initialize
     super 640, 480, false
     self.caption = "Sprite Testing"
@@ -13,88 +29,43 @@ class GameWindow < Gosu::Window
     @bgcolor = Gosu::Color.new(255,255,255,255)
 
     @sprite = Sprite.new(self, 200, "pcm_all.png", 16, 16);
+    @cherry = Sprite.new(self, 200, "cherry.png", 16, 16);
 
-	@sprite.add_anim("right", 0, 4);
-	@sprite.add_anim("left", 4, 4);
-	@sprite.add_anim("up", 8, 4);
-	@sprite.add_anim("down", 12, 4);
-    #@sprite.add_anim("anims/sw_front.png", "down", 32, 32);
-    #@sprite.add_anim("anims/sw_right.png", "right", 32, 32);
-    #@sprite.add_anim("anims/sw_left.png", "left", 32, 32);
-    #@sprite.add_anim("anims/sw_back.png", "up", 32, 32);
-    @sprite.set_anim("right")
+	@sprite.add_anim("right", 0, 4)
+	@sprite.add_anim("left", 4, 4)
+	@sprite.add_anim("up", 8, 4)
+	@sprite.add_anim("down", 12, 4)
+	@sprite.set_anim("right")
+
+	@cherry.add_anim("right", 0, 2)
+	@cherry.add_anim("left", 2, 2)
+	@cherry.add_anim("up", 4, 2)
+	@cherry.add_anim("down", 6, 2)
+	@cherry.set_anim("right")
+	@cherry.direction = Direction::Up
+	@map = Map.new(self, ARGV[0])
+
     @sprite.warp(80, 80)
 
-    @map = Map.new(self, ARGV[0])
+    @cherry.warp(16,32)
+    @cherry.set_tile(norm(@cherry.x, @map.tile_width),norm(@cherry.y, @map.tile_height))
+        @playercontroller = HumanController.new(self, @sprite, @map)
+
+    # setear el behaviour desde fuera, para no tener que repetir información y se cree desde AIController
+    @cherrycontroller = AIController.new(@cherry, @map, Behaviour.new(@cherry, @map))
 
   end
 
   def update
-	correccionX = @sprite.x - ((@sprite.x).floor/16)*16
-	correccionY = @sprite.y - ((@sprite.y).floor/16)*16
-	tolerancia = 8
-
-    if button_down? Gosu::KbUp then
-      @sprite.set_anim("up")
-      if @map.is_possible_movement("up",
-      		@sprite.x, @sprite.y-@sprite.vel-tolerancia,tolerancia)
-      	  correccionY != 0
-        @sprite.move_up
-        if correccionX != 0
-        if correccionX.abs >= 8
-          @sprite.x = @sprite.x + 1
-        else
-          @sprite.x = @sprite.x - 1
-		end
-		end
-      end
-    elsif button_down? Gosu::KbDown then
-      @sprite.set_anim("down")
-      if @map.is_possible_movement("down",
-      		@sprite.x, @sprite.y+@sprite.vel+tolerancia,tolerancia)
-        @sprite.move_down
-
-        if correccionX != 0
-        if correccionX.abs >= 8
-          @sprite.x = @sprite.x + 1
-        else
-          @sprite.x = @sprite.x - 1
-		end
-		end
-
-      end
-    elsif button_down? Gosu::KbLeft then
-      @sprite.set_anim("left")
-      if @map.is_possible_movement("left",
-      		@sprite.x-@sprite.vel-tolerancia,@sprite.y,tolerancia)
-        @sprite.move_left
-        if correccionY != 0
-        if correccionY.abs >= 8
-          @sprite.y = @sprite.y + 1
-        else
-          @sprite.y = @sprite.y - 1
-		end
-		end
-      end
-    elsif button_down? Gosu::KbRight then
-      @sprite.set_anim("right")
-      if @map.is_possible_movement("right",
-      		@sprite.x+@sprite.vel+tolerancia,@sprite.y,tolerancia)
-        @sprite.move_right
-        if correccionY != 0
-        if correccionY.abs >= 8
-          @sprite.y = @sprite.y + 1
-        else
-          @sprite.y = @sprite.y - 1
-		end
-		end
-      end
-    end
+		@playercontroller.update
+		@cherrycontroller.update
   end
 
   def draw
     @map.draw
     @sprite.draw
+    @cherry.draw
+    puts "x.#{@cherry.tile_x} y.#{@cherry.tile_y}"
   end
 
   def button_down(id)

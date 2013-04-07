@@ -1,7 +1,5 @@
 require 'rubygems'
 require 'gosu'
-require 'Direction'
-
 class Tile
   attr_reader :image
 
@@ -16,9 +14,10 @@ class Tile
 
 end
 
+
 class Map
   attr_reader :map, :tilesheet, :tile_width, :tile_height, :width, :height
-
+  
   def initialize(window, *rest)
     @window = window
     if rest.size == 6 then
@@ -33,7 +32,7 @@ class Map
 
       # Init map
       @map = Array.new(@height) { |i| Array.new(@width) { |i| default_tile } }
-
+      
       # Init tiles
       @tiles = Hash.new
       spliced_tsheet = Gosu::Image::load_tiles(window,
@@ -158,9 +157,34 @@ class Map
   end
   
   def is_solid?(x, y)
-  	puts "asked for #{x} and #{y}"
-  	puts "SOLID NIGGA'" if @tiles[@map[y][x]].is_solid?
-	return @tiles[@map[y][x]].is_solid?
+	return @tiles[@map[x][y]].is_solid?
+  end
+
+=begin
+  def populate_collidable(bounds)
+    startX = bounds.x
+    startY = bounds.y
+    endX = bounds.x + bounds.w
+    endY = bounds.y + bounds.h
+	x = startX
+	y = startY
+	until x > endX do
+	  until y > endY do
+	  	@collidable << Rect.new( x/16 + 
+	  x = x + 16
+	(startX..endX).each do |x|
+	  (startY..endY).each do |y|
+	  	
+	  end
+	end
+  end
+=end
+
+  def give_my_corners(x, y, sprite)
+  	upY = (sprite.y / 16)
+  	downY = (sprite.y + 15) / 16
+  	rightX = 1
+  	leftX = 1
   end
 
   def is_possible_movement(direction, newX, newY, tolerancia)
@@ -169,7 +193,7 @@ class Map
   	leftX =  ((newX + tolerancia)/ 16).floor
   	rightX = ((newX + 15 - tolerancia) / 16).floor
 
-	if direction == Direction::Up
+	if direction == "up"
       if @tiles[@map[upY][leftX]].is_solid?
         return false
       end
@@ -179,7 +203,7 @@ class Map
 	  return true
     end
 
-    if direction == Direction::Down
+    if direction == "down"
       if @tiles[@map[downY][leftX]].is_solid?
         return false
       end
@@ -190,7 +214,7 @@ class Map
       return true
     end
 
-    if direction == Direction::Right
+    if direction == "right"
       if @tiles[@map[upY][rightX]].is_solid?
         return false
       end
@@ -202,7 +226,7 @@ class Map
     end
 
     # OK!
-    if direction == Direction::Left
+    if direction == "left"
 	  if @tiles[@map[downY][leftX]].is_solid?
         return false
       end
