@@ -1,5 +1,0 @@
-File.open('foo.txt') {|f|
-  f.each {|line|
-    line.each
-  }
-}
