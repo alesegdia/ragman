@@ -19,6 +19,7 @@ class EditionState < GGLib::StateObject
     $window.setBackground("bground.jpg")
     puts "starting edition!"
     @goToLoad = nil
+    @goToSave = nil
 
     @map = $window.map
 
@@ -31,7 +32,8 @@ class EditionState < GGLib::StateObject
     
     GGLib::Button.new(:savemap, "SAVE MAP",  270, 200,
                       Proc.new do |widget|
-                        $window.state = GGLib::FadeScreen.new(SaveMenu.new, 32)
+        				@goToSave = true
+                        #$window.state = GGLib::FadeScreen.new(SaveMenu.new, 32)
                       end,
                       GGLib::Themes::BlueSteel)
     
@@ -52,7 +54,10 @@ class EditionState < GGLib::StateObject
     if @goToLoad then
       @goToLoad = nil
       $window.state = LoadMenu.new
-    end
+	elsif @goToSave then
+	  @goToSave = nil
+	  $window.state = SaveMenu.new
+	end
   end
 
   def draw

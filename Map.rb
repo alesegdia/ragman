@@ -95,18 +95,19 @@ class Map
   end
 
   def save_file(path)
-    file += "TILESIZE #{@tile_width} #{@tile_height}\n"
-    file += "TILEIMG #{@tile_img}"
-    @tiles.each { |key,val| file += "TILE #{key} #{(val.is_solid?) ? 'true' : 'false'}" }
+	content = ""
+	content << "TILESIZE #{@tile_width} #{@tile_height} #{@width} #{@height}\n"
+    content << "#{@tilesheet}\n"
+    @tiles.each { |key,val| content << "TILE #{key} #{(val.is_solid?) ? 'true' : 'false'}\n" }
 
     @map.each_index { |i|
-      file += "T "
+      content << "L "
       @map[i].each { |elem|
-        file += "#{elem} "
+        content << "#{elem} "
       }
-      file += "\n"
+      content << "\n"
     }
-
+  	File.open(path, 'w') { |f| f.write(content) }
   end
 
   def add_tile (id, image, solid)
