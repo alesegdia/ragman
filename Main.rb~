@@ -27,7 +27,7 @@ class GameWindow < Gosu::Window
     self.caption = "Sprite Testing"
 
     @bgcolor = Gosu::Color.new(255,255,255,255)
-	#@agent_controller = AgentController.new
+	@agent_controller = AgentController.new
 
     @sprite = Sprite.new(self, 200, "pcm_all.png", 16, 16);
     @cherry = Sprite.new(self, 200, "cherry.png", 16, 16);

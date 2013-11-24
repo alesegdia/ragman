@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'gosu'
-require 'Direction'
+require './Direction.rb'
 
 class HumanController
 
@@ -11,8 +11,8 @@ class HumanController
   end
 
   def update
-  	correccionX = @sprite.x - ((@sprite.x).floor/16)*16
-	correccionY = @sprite.y - ((@sprite.y).floor/16)*16
+  	#correccionX = @sprite.x - ((@sprite.x).floor/16)*16
+	#correccionY = @sprite.y - ((@sprite.y).floor/16)*16
 
 	move = true
 	direction_candidate = Direction::None

@@ -1,8 +1,8 @@
 require 'rubygems'
 require 'gosu'
-require './Map.rb'
-require './Sprite.rb'
-require './Direction.rb'
+require 'Map'
+require 'Sprite'
+require 'Direction'
 
 module ActionType
   MoveLeft = 1
@@ -16,8 +16,7 @@ def pickup_dir
   return [Direction::Up,
   	      Direction::Down,
   	      Direction::Left,
-  	      #Direction::Right].choice
-  	      Direction::Right].sample
+  	      Direction::Right].choice
 end
 
 class Behaviour

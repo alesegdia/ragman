@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'gosu'
-require 'Direction'
+require './Direction.rb'
 
 class Tile
   attr_reader :image
@@ -19,6 +19,7 @@ end
 class Map
   attr_reader :map, :tilesheet, :tile_width, :tile_height, :width, :height
 
+  # tile_width, tile_height, map_width, map_height, default_tile, tilesheet
   def initialize(window, *rest)
     @window = window
     if rest.size == 6 then
@@ -41,11 +42,12 @@ class Map
                                                @tile_width,
                                                @tile_height,
                                                false)
+
       spliced_tsheet.each_index { |i| add_tile(i, spliced_tsheet[i], false) }
       # @tiles[i] = Tile.new(tile_images[i], false)
-      
+
     elsif rest.size == 1 then
-      load_file(ARGV[0])
+      load_file(rest[0]) #ARGV[0])
     end
   end
 
@@ -53,32 +55,33 @@ class Map
     Struct::MapInfo.new(@tile_width, @tile_height,
                         @map_width, @map_height, @tiles_img)
   end
-  
+
   def load_file(path)
     # Load file, size and array map
+    filepath = File.dirname(path)
     file = File.new(path, "r")
     @tile_width, @tile_height, @width, @height =
       file.gets.split(' ').drop(1).collect! { |x| Integer(x) }
-    
+
     @map = Array.new(Integer(@height)) { Array.new(Integer(@width)) }
-    
+
     # Load tiles
     @tiles = Hash.new
     @tilesheet = file.gets.chomp
     tile_images = Gosu::Image::load_tiles(@window,
-                                          @tilesheet,
+                                          filepath + "/" + @tilesheet,
                                           @tile_width,
                                           @tile_height,
                                           false)
-    
+
     while (line = file.gets and
            line =~ /^TILE.*/)
-      
+
       # Parse lines
       args = line.split(' ')
       id, solid = Integer(args[1]), args[2]
       solidity = (solid == "true") ? true : false
-      
+
       # Add tile to list
       add_tile(id, tile_images[id], solidity)
       puts "tile created! #{id}"

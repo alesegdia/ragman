@@ -1,9 +1,9 @@
 require 'rubygems'
 require 'gosu'
-require 'Direction'
-require 'Sprite'
-require 'Behaviour'
-require 'Map'
+require './Direction.rb'
+require './Sprite.rb'
+require './Behaviour.rb'
+require './Map.rb'
 
 module ActionType
   MoveLeft = 1
