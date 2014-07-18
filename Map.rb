@@ -1,39 +1,58 @@
 require 'rubygems'
 require 'gosu'
 require './Direction.rb'
+require './Vec2.rb'
+
+module OpenMode
+  Edition = 0
+  Gameplay = 1
+end
+
+module TileKind
+  Free = 0
+  Solid = 1
+  Pacman = 2
+  Pill = 3
+  PowerPill = 4
+  Warp = 5
+  GhostSpawn = 6
+  GhostBarrier = 7
+  AStarNode = 8
+end
 
 class Tile
   attr_reader :image
 
-  def initialize(image, solid)
-    @solid = solid
+  def initialize(image, kind)
+    @kind = kind
     @image = image
   end
 
   def is_solid?
-    @solid
+    @kind == TileKind::Solid
   end
 
 end
 
 class Map
   attr_reader :map, :tilesheet, :tile_width, :tile_height, :width, :height
+  attr_reader :tile_images
+  attr_accessor :entity_info
 
   # tile_width, tile_height, map_width, map_height, default_tile, tilesheet
-  def initialize(window, *rest)
+  def initialize(window, modo, *rest)
+    @modo = modo
     @window = window
-    if rest.size == 6 then
-      puts "6 args!"
-      # Create new empty map
+    if rest.size == 5 then
 
-	  @tile_width, @tile_height = rest[0], rest[1]
+      # Create new empty map
+      @tile_width, @tile_height = rest[0], rest[1]
       @width, @height = rest[2], rest[3]
-      default_tile = rest[4]
-      puts rest[5]
-      @tilesheet = rest[5]
+      @tilesheet = rest[4]
+      @players = Array.new()
 
       # Init map
-      @map = Array.new(@height) { |i| Array.new(@width) { |i| default_tile } }
+      @map = Array.new(@height) { |i| Array.new(@width) { |i| TileKind::Free } }
 
       # Init tiles
       @tiles = Hash.new
@@ -43,17 +62,138 @@ class Map
                                                @tile_height,
                                                false)
 
-      spliced_tsheet.each_index { |i| add_tile(i, spliced_tsheet[i], false) }
+      spliced_tsheet.each_index { |i| add_tile(i, spliced_tsheet[i]) }
       # @tiles[i] = Tile.new(tile_images[i], false)
 
     elsif rest.size == 1 then
       load_file(rest[0]) #ARGV[0])
     end
+    if modo == OpenMode::Gameplay then
+      parse_entities()
+    end
+    parse_map()
   end
 
   def map_info
     Struct::MapInfo.new(@tile_width, @tile_height,
                         @map_width, @map_height, @tiles_img)
+  end
+
+  def parse_map
+    @nodos = Array.new
+    for i in 0..@map.size()-1 do
+      for j in 0..@map.size()-1 do
+        if @map[i][j] == TileKind::Free then
+          nodo_inicial = Vec2.new( j, i )
+        end
+      end
+    end
+
+    check_branches( nodo_inicial, @nodos )
+  end
+
+  def check_branches( nodo, nodos )
+    puts "en nodo #{nodo.x}, #{nodo.y}"
+    if is_valid(nodo) and !nodos.include?( nodo ) then
+      nodos << nodo
+      dirs = Array.new
+      nods = Array.new
+      if not self.is_solid?(nodo.x+1, nodo.y) then
+        dirs << Direction::Right
+        nods << Vec2.new( nodo.x+1, nodo.y )
+      end
+      if not self.is_solid?(nodo.x-1, nodo.y) then
+        dirs << Direction::Left
+        nods << Vec2.new( nodo.x-1, nodo.y )
+      end
+      if not self.is_solid?(nodo.x, nodo.y-1) then
+        dirs << Direction::Up
+        nods << Vec2.new( nodo.x, nodo.y-1 )
+      end
+      if not self.is_solid?(nodo.x, nodo.y+1) then
+        dirs << Direction::Down
+        nods << Vec2.new( nodo.x, nodo.y+1 )
+      end
+
+      dirs << Direction::Right if not self.is_solid?(nodo.x+1, nodo.y)
+      dirs << Direction::Left if not self.is_solid?(nodo.x-1, nodo.y)
+      dirs << Direction::Up if not self.is_solid?(nodo.x, nodo.y-1)
+      dirs << Direction::Down if not self.is_solid?(nodo.x, nodo.y+1)
+
+      for i in 0..dirs.size()-1 do
+        continue_branch( nods[i], dirs[i], nodos )
+      end
+    end
+  end
+  
+  def is_valid( nodo )
+    #if nodo == nil then return false end
+    nodo.x >= 0 and nodo.y >= 0 and nodo.x < @width and nodo.y < @height
+  end
+
+  def continue_branch( nodo, dir, nodos )
+    if nodo != nil and is_valid(nodo) then
+    case dir
+    when Direction::Left
+      sig_nodo = Vec2.new( nodo.x - 1, nodo.y )
+    when Direction::Right
+      sig_nodo = Vec2.new( nodo.x + 1, nodo.y )
+    when Direction::Up
+      sig_nodo = Vec2.new( nodo.x, nodo.y - 1 )
+    when Direction::Down
+      sig_nodo = Vec2.new( nodo.x, nodo.y + 1 )
+    end
+
+    dirs = Array.new
+    dirs << Direction::Right if not self.is_solid?(nodo.x+1, nodo.y)
+    dirs << Direction::Left if not self.is_solid?(nodo.x-1, nodo.y)
+    dirs << Direction::Up if not self.is_solid?(nodo.x, nodo.y-1)
+    dirs << Direction::Down if not self.is_solid?(nodo.x, nodo.y+1)
+
+      if dirs.size() > 2 then
+        check_branches( nodo, nodos )
+      end
+
+    puts "tirando por #{nodo.x}, #{nodo.y} hasta #{sig_nodo.x}, #{sig_nodo.y}"
+
+    if is_solid?(sig_nodo.x, sig_nodo.y) then
+      check_branches( nodo, nodos )
+    else
+      continue_branch( sig_nodo, dir, nodos )
+    end
+    end
+  end
+
+  def parse_entities
+    @entity_info = Hash.new
+    @entity_info["pills"] = Array.new
+    @entity_info["powerpills"] = Array.new
+    @entity_info["pacman_spawn"] = Vec2.new
+    @entity_info["ghost_spawn"] = Array.new
+    @entity_info["warp"] = Array.new
+
+    for i in 0..@map.size()-1 do
+      for j in 0..@map[i].size()-1 do
+        case @map[i][j]
+        when TileKind::Solid, TileKind::Free
+          nil
+        when TileKind::Pill
+          @entity_info["pills"] << Vec2.new( j, i )
+        when TileKind::PowerPill
+          @entity_info["powerpills"] << Vec2.new( j, i )
+        when TileKind::Pacman
+          @entity_info["pacman_spawn"] = Vec2.new( j, i )
+        when TileKind::GhostSpawn
+          @entity_info["ghost_spawn"] << Vec2.new( j, i )
+          puts "ghost spawn: #{j}, #{i}"
+        when TileKind::Warp
+          @entity_info["warp"] << Vec2.new( j, i )
+        end
+        if @map[i][j] != TileKind::Solid then
+          @map[i][j] = TileKind::Free
+        end
+      end
+    end
   end
 
   def load_file(path)
@@ -68,53 +208,41 @@ class Map
     # Load tiles
     @tiles = Hash.new
     @tilesheet = file.gets.chomp
-    tile_images = Gosu::Image::load_tiles(@window,
+    @tile_images = Gosu::Image::load_tiles(@window,
                                           filepath + "/" + @tilesheet,
                                           @tile_width,
                                           @tile_height,
                                           false)
 
-    while (line = file.gets and
-           line =~ /^TILE.*/)
-
-      # Parse lines
-      args = line.split(' ')
-      id, solid = Integer(args[1]), args[2]
-      solidity = (solid == "true") ? true : false
-
-      # Add tile to list
-      add_tile(id, tile_images[id], solidity)
-      puts "tile created! #{id}"
-      #puts @tiles.at(id).is_solid?
+    for i in 0..tile_images.size() do
+      add_tile(i, tile_images[i])
     end
-
 
     # Load map
     i = 0
-    begin
-      @map[i] = line.split(' ').drop(1).collect! { |x| Integer(x) }
+    while line = file.gets do
+      @map[i] = line.split(' ').collect! { |x| Integer(x) }
       i += 1
-    end while(line = file.gets)
+    end
+
   end
 
   def save_file(path)
-	content = ""
-	content << "TILESIZE #{@tile_width} #{@tile_height} #{@width} #{@height}\n"
+    content = ""
+    content << "SIZE #{@tile_width} #{@tile_height} #{@width} #{@height}\n"
     content << "#{@tilesheet}\n"
-    @tiles.each { |key,val| content << "TILE #{key} #{(val.is_solid?) ? 'true' : 'false'}\n" }
 
     @map.each_index { |i|
-      content << "L "
       @map[i].each { |elem|
         content << "#{elem} "
       }
       content << "\n"
     }
-  	File.open(path, 'w') { |f| f.write(content) }
+    File.open(path, 'w') { |f| f.write(content) }
   end
 
-  def add_tile (id, image, solid)
-    @tiles[id] = Tile.new(image, solid)
+  def add_tile (id, image)
+    @tiles[id] = Tile.new(image, id)
   end
 
   def swap_tile(x, y, new_tile)
@@ -122,12 +250,12 @@ class Map
     y_sel = (y / @tile_height).floor
 
     if (x_sel < @width and y_sel < @height) and
-        (x_sel >= 0 and y_sel >= 0) and
-        (new_tile < @tiles.length)
+      (x_sel >= 0 and y_sel >= 0) and
+      (new_tile < @tiles.length)
       @map[y_sel][x_sel] = String(new_tile)
     end
   end
-  
+
   def draw
     ##puts to_s
     @map.each_index do |i| 
@@ -136,6 +264,10 @@ class Map
                                                i * @tile_height,
                                                1)
       end
+    end
+
+    @nodos.each do |n|
+      @tile_images[TileKind::AStarNode].draw( n.x*16, n.y*16, 1)
     end
   end
 
@@ -160,27 +292,31 @@ class Map
     end
     s
   end
-  
+
   def is_solid?(x, y)
-  	puts "asked for #{x} and #{y}"
-  	puts "SOLID NIGGA'" if @tiles[@map[y][x]].is_solid?
-	return @tiles[@map[y][x]].is_solid?
+    if x >= 0 and y >= 0 and x < @width and y < @height then
+      #puts "asked for #{x} and #{y}"
+      #puts "SOLID NIGGA'" if @tiles[@map[y][x]].is_solid?
+      return @tiles[@map[y][x]].is_solid?
+    else
+      return false
+    end
   end
 
   def is_possible_movement(direction, newX, newY, tolerancia)
-  	upY =    ((newY + tolerancia) / 16).floor
-  	downY =  ((newY + 15 - tolerancia) / 16).floor
-  	leftX =  ((newX + tolerancia)/ 16).floor
-  	rightX = ((newX + 15 - tolerancia) / 16).floor
+    upY =    ((newY + tolerancia) / 16).floor
+    downY =  ((newY + 15 - tolerancia) / 16).floor
+    leftX =  ((newX + tolerancia)/ 16).floor
+    rightX = ((newX + 15 - tolerancia) / 16).floor
 
-	if direction == Direction::Up
+    if direction == Direction::Up
       if @tiles[@map[upY][leftX]].is_solid?
         return false
       end
       if @tiles[@map[upY][rightX]].is_solid?
-		return false
+        return false
       end
-	  return true
+      return true
     end
 
     if direction == Direction::Down
@@ -188,18 +324,18 @@ class Map
         return false
       end
       if @tiles[@map[downY][rightX]].is_solid?
-		return false
+        return false
       end
 
       return true
     end
 
     if direction == Direction::Right
-      if @tiles[@map[upY][rightX]].is_solid?
+      if is_solid?(rightX, upY)
         return false
       end
       if @tiles[@map[downY][rightX]].is_solid?
-		return false
+        return false
       end
 
       return true
@@ -207,11 +343,11 @@ class Map
 
     # OK!
     if direction == Direction::Left
-	  if @tiles[@map[downY][leftX]].is_solid?
+      if @tiles[@map[downY][leftX]].is_solid?
         return false
       end
       if @tiles[@map[upY][leftX]].is_solid?
-		return false
+        return false
       end
       return true
     end

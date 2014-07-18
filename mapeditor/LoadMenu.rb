@@ -4,8 +4,8 @@ require 'gglib'
 require '../gglib/ext/widgets'
 require '../gglib/ext/themes'
 require '../Map.rb'
-require 'Grid.rb'
-require 'EditionState.rb'
+require './Grid.rb'
+require './EditionState.rb'
 
 class LoadMenu < GGLib::StateObject
   def initialize
