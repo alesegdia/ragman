@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'gosu'
 require './Direction.rb'
+require './NavigationMap.rb'
 require './Vec2.rb'
 
 module OpenMode
@@ -36,8 +37,7 @@ end
 
 class Map
   attr_reader :map, :tilesheet, :tile_width, :tile_height, :width, :height
-  attr_reader :tile_images
-  attr_accessor :entity_info
+  attr_reader :tile_images, :entity_info
 
   # tile_width, tile_height, map_width, map_height, default_tile, tilesheet
   def initialize(window, modo, *rest)
@@ -71,97 +71,29 @@ class Map
     if modo == OpenMode::Gameplay then
       parse_entities()
     end
-    parse_map()
+
+    @navmap = NavigationMap.new( self )
+
   end
 
-  def map_info
-    Struct::MapInfo.new(@tile_width, @tile_height,
-                        @map_width, @map_height, @tiles_img)
-  end
-
-  def parse_map
-    @nodos = Array.new
-    for i in 0..@map.size()-1 do
-      for j in 0..@map.size()-1 do
-        if @map[i][j] == TileKind::Free then
-          nodo_inicial = Vec2.new( j, i )
-        end
-      end
-    end
-
-    check_branches( nodo_inicial, @nodos )
-  end
-
-  def check_branches( nodo, nodos )
-    puts "en nodo #{nodo.x}, #{nodo.y}"
-    if is_valid(nodo) and !nodos.include?( nodo ) then
-      nodos << nodo
-      dirs = Array.new
-      nods = Array.new
-      if not self.is_solid?(nodo.x+1, nodo.y) then
-        dirs << Direction::Right
-        nods << Vec2.new( nodo.x+1, nodo.y )
-      end
-      if not self.is_solid?(nodo.x-1, nodo.y) then
-        dirs << Direction::Left
-        nods << Vec2.new( nodo.x-1, nodo.y )
-      end
-      if not self.is_solid?(nodo.x, nodo.y-1) then
-        dirs << Direction::Up
-        nods << Vec2.new( nodo.x, nodo.y-1 )
-      end
-      if not self.is_solid?(nodo.x, nodo.y+1) then
-        dirs << Direction::Down
-        nods << Vec2.new( nodo.x, nodo.y+1 )
-      end
-
-      dirs << Direction::Right if not self.is_solid?(nodo.x+1, nodo.y)
-      dirs << Direction::Left if not self.is_solid?(nodo.x-1, nodo.y)
-      dirs << Direction::Up if not self.is_solid?(nodo.x, nodo.y-1)
-      dirs << Direction::Down if not self.is_solid?(nodo.x, nodo.y+1)
-
-      for i in 0..dirs.size()-1 do
-        continue_branch( nods[i], dirs[i], nodos )
-      end
-    end
-  end
-  
   def is_valid( nodo )
     #if nodo == nil then return false end
     nodo.x >= 0 and nodo.y >= 0 and nodo.x < @width and nodo.y < @height
   end
 
-  def continue_branch( nodo, dir, nodos )
-    if nodo != nil and is_valid(nodo) then
-    case dir
-    when Direction::Left
-      sig_nodo = Vec2.new( nodo.x - 1, nodo.y )
-    when Direction::Right
-      sig_nodo = Vec2.new( nodo.x + 1, nodo.y )
-    when Direction::Up
-      sig_nodo = Vec2.new( nodo.x, nodo.y - 1 )
-    when Direction::Down
-      sig_nodo = Vec2.new( nodo.x, nodo.y + 1 )
-    end
-
-    dirs = Array.new
-    dirs << Direction::Right if not self.is_solid?(nodo.x+1, nodo.y)
-    dirs << Direction::Left if not self.is_solid?(nodo.x-1, nodo.y)
-    dirs << Direction::Up if not self.is_solid?(nodo.x, nodo.y-1)
-    dirs << Direction::Down if not self.is_solid?(nodo.x, nodo.y+1)
-
-      if dirs.size() > 2 then
-        check_branches( nodo, nodos )
+  def get_first_free
+    for i in 0..@map.size()-1 do
+      for j in 0..@map[0].size()-1 do
+        if @map[i][j] == TileKind::Free then
+          return Vec2.new( j, i )
+        end
       end
-
-    puts "tirando por #{nodo.x}, #{nodo.y} hasta #{sig_nodo.x}, #{sig_nodo.y}"
-
-    if is_solid?(sig_nodo.x, sig_nodo.y) then
-      check_branches( nodo, nodos )
-    else
-      continue_branch( sig_nodo, dir, nodos )
     end
-    end
+  end
+
+  def map_info
+    Struct::MapInfo.new(@tile_width, @tile_height,
+                        @map_width, @map_height, @tiles_img)
   end
 
   def parse_entities
@@ -185,7 +117,6 @@ class Map
           @entity_info["pacman_spawn"] = Vec2.new( j, i )
         when TileKind::GhostSpawn
           @entity_info["ghost_spawn"] << Vec2.new( j, i )
-          puts "ghost spawn: #{j}, #{i}"
         when TileKind::Warp
           @entity_info["warp"] << Vec2.new( j, i )
         end
@@ -208,11 +139,8 @@ class Map
     # Load tiles
     @tiles = Hash.new
     @tilesheet = file.gets.chomp
-    @tile_images = Gosu::Image::load_tiles(@window,
-                                          filepath + "/" + @tilesheet,
-                                          @tile_width,
-                                          @tile_height,
-                                          false)
+    @tile_images = Gosu::Image::load_tiles(@window, "media" + "/" + @tilesheet,
+                                          @tile_width, @tile_height, false)
 
     for i in 0..tile_images.size() do
       add_tile(i, tile_images[i])
@@ -258,7 +186,7 @@ class Map
 
   def draw
     ##puts to_s
-    @map.each_index do |i| 
+    @map.each_index do |i|
       @map[i].each_index do |j|
         @tiles[Integer(@map[i][j])].image.draw(j * @tile_width,
                                                i * @tile_height,
@@ -266,14 +194,14 @@ class Map
       end
     end
 
-    @nodos.each do |n|
+    @navmap.navnodes.each do |n|
       @tile_images[TileKind::AStarNode].draw( n.x*16, n.y*16, 1)
     end
   end
 
   # Made just for the editor
   def draw_offset(xoff, yoff)
-    @map.each_index do |i| 
+    @map.each_index do |i|
       @map[i].each_index do |j|
         @tiles[Integer(@map[i][j])].image.draw(xoff + j * @tile_width,
                                                yoff + i * @tile_height,

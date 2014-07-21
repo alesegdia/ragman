@@ -6,6 +6,8 @@ module GhostState
   Base = 3
 end
 
+# This module lets a ghost only act when he can, and take
+# control over it when game rules state it
 class GhostController
 
   def initialize( entity, map, controller )

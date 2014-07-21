@@ -1,12 +1,12 @@
 require 'rubygems'
 require 'gosu'
 require 'gglib'
-require '../gglib/ext/widgets.rb'
-require '../gglib/ext/themes.rb'
-require '../Map.rb'
-require './Grid.rb'
-require './LoadMenu.rb'
-require './SaveMenu.rb'
+require './gglib/ext/widgets.rb'
+require './gglib/ext/themes.rb'
+require './Map.rb'
+require './mapeditor/Grid.rb'
+require './mapeditor/LoadMenu.rb'
+require './mapeditor/SaveMenu.rb'
 
 class EditionState < GGLib::StateObject
 
@@ -16,7 +16,7 @@ class EditionState < GGLib::StateObject
   end
 
   def onStart
-    $window.setBackground("bground.jpg")
+    $window.setBackground("mapeditor/bground.jpg")
     puts "starting edition!"
     @goToLoad = nil
     @goToSave = nil

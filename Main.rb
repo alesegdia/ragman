@@ -26,7 +26,7 @@ class GameWindow < Gosu::Window
 
   # PRE: mapa cargado, @ghost_entities = Hash.new
   def load_ghost( id )
-    file = "g#{id}.png"
+    file = "media/g#{id}.png"
     ghost = Entity.new( self, 200, file, 16, 16 )
     ghost.add_anim(Direction::Right, 0, 2)
     ghost.add_anim(Direction::Left, 2, 2)
@@ -44,7 +44,7 @@ class GameWindow < Gosu::Window
 
   # PRE: mapa cargado
   def load_pacman()
-    @pacman = Entity.new( self, 100, "pcm_all.png", 16, 16 )
+    @pacman = Entity.new( self, 100, "media/pcm_all.png", 16, 16 )
     @pacman.add_anim(Direction::Right, 0, 4)
     @pacman.add_anim(Direction::Left, 4, 4)
     @pacman.add_anim(Direction::Up, 8, 4)
@@ -72,7 +72,7 @@ class GameWindow < Gosu::Window
     @bgcolor = Gosu::Color.new(255,255,255,255)
 
     if ARGV.length == 0
-      @map = Map.new(self, OpenMode::Gameplay, "original")
+      @map = Map.new(self, OpenMode::Gameplay, "maps/original")
     else
       @map = Map.new(self, OpenMode::Gameplay, ARGV[0])
     end
@@ -102,7 +102,6 @@ class GameWindow < Gosu::Window
       Gosu::distance( @pacman.x, @pacman.y, pill.x * 16, pill.y * 16 ) < 4
     end
 
-    puts "pacman: #{@pacman.x}, #{@pacman.y}"
     warp = nil
     for i in 0..@warps.size-1 do
       w = @warps[i]

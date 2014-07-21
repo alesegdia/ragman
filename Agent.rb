@@ -18,6 +18,10 @@ class Agent
   	@prev_action = Direction::Up
   end
 
+  def pathfind( from, to )
+
+  end
+
   def update
 
   	# cambiar al behaviour cuando lo hagas virtual

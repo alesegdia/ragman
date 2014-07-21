@@ -1,13 +1,13 @@
 require 'rubygems'
 require 'gosu'
 require 'gglib'
-require '../gglib/ext/widgets.rb'
-require '../gglib/ext/themes.rb'
-require '../Map.rb'
-require './Grid.rb'
-require './EditionState.rb'
+require './gglib/ext/widgets.rb'
+require './gglib/ext/themes.rb'
+require './Map.rb'
+require './mapeditor/Grid.rb'
+require './mapeditor/EditionState.rb'
 # require 'NewMapState.rb'
-require './LoadMenu.rb'
+require './mapeditor/LoadMenu.rb'
 # Add ZOrder
 
 class EditorWindow < GGLib::GUIWindow
@@ -21,22 +21,19 @@ class EditorWindow < GGLib::GUIWindow
     if ARGV.size == 1 then
       puts "Main.rb: 1 param"
       @map = Map.new(self, OpenMode::Edition, ARGV[0])
-    elsif ARGV.size == 5 then
-      puts "Main.rb: 5 param"
+    elsif ARGV.size == 2 then
+      puts "Main.rb: 2 param"
       @map = Map.new(self, OpenMode::Edition,
+                     16, #Integer(ARGV[0]),
+                     16, #Integer(ARGV[1]),
                      Integer(ARGV[0]),
                      Integer(ARGV[1]),
-                     Integer(ARGV[2]),
-                     Integer(ARGV[3]),
-                     ARGV[4])
+                     "media/map_tiles.png" )#ARGV[2])
     else
       puts "Usage:"
       puts "\t* ruby Main.rb <map file>"
-      puts "\t* ruby Main.rb <tile width>"
-      puts "\t               <tile height>"
-      puts "\t               <map width>"
-      puts "\t               <map height>"
-      puts "\t               <tilesheet>\n\n"
+      puts "\t* ruby Main.rb <map width>"
+      puts "\t               <map height>\n\n"
       exit
     end
     ##@edition = EditionState.new
