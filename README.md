@@ -74,8 +74,8 @@ methods for pathfinding. NavigationMap is not finished, so nodes are just set up
 
 ![alt tag](https://raw.github.com/alesegdia/ragman/master/media/screen1.png)
 
-Also, the map editor is working too. I hope no more changes are added so that it breaks again. Map format is somehow fixed, since
-I just let 1 kind of tiles to be used, but it could easily be patched to support other custom tiles, just thought there would be
+Also, the map editor is working too. I hope no more changes are added so that it doesn't break again. Map format is somehow fixed, since
+I just let one kind of tileset to be used, but it could easily be patched to support other custom tiles, just thought there would be
 no interest on that right now.
 
 ![alt tag](https://raw.github.com/alesegdia/ragman/master/media/screen0.png)
