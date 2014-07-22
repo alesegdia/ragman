@@ -72,11 +72,11 @@ Simulation running as it is today. Green circles are AI pathnodes, and yellow li
 This way you don't have to use all tiles as nodes for pathfinding, but a NavigationMap is provided instead with proper
 methods for pathfinding. NavigationMap is not finished, so nodes are just set up but actual pathfinding isn't still provided.
 
-![alt tag](https://raw.github.com/alesegdia/ragman/media/screen1.png)
+![alt tag](https://raw.github.com/alesegdia/ragman/master/media/screen1.png)
 
 Also, the map editor is working too. I hope no more changes are added so that it breaks again. Map format is somehow fixed, since
 I just let 1 kind of tiles to be used, but it could easily be patched to support other custom tiles, just thought there would be
 no interest on that right now.
 
-![alt tag](https://raw.github.com/alesegdia/ragman/media/screen0.png)
+![alt tag](https://raw.github.com/alesegdia/ragman/master/media/screen0.png)
 
