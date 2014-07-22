@@ -1,7 +1,13 @@
 Works with
 ====
 * Ruby 1.9.3
-* Gosu 0.7.5 ...(gem install gosu)...
+* Gosu 0.7.5 
+
+To install gosu:
+
+```
+gem install gosu
+```
 
 Features
 ====
