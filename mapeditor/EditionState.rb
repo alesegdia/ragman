@@ -3,7 +3,7 @@ require 'gosu'
 require 'gglib'
 require './gglib/ext/widgets.rb'
 require './gglib/ext/themes.rb'
-require './Map.rb'
+require './spatial/Map.rb'
 require './mapeditor/Grid.rb'
 require './mapeditor/LoadMenu.rb'
 require './mapeditor/SaveMenu.rb'
@@ -28,7 +28,7 @@ class EditionState < GGLib::StateObject
     @grid_xoff, @grid_yoff = 30, 40
     @map_xoff, @map_yoff = 150, 20
     puts @map.tilesheet
-    @grid = Grid.new($window, @map.tilesheet, 5, 200, 100, 16, 16)
+    @grid = Grid.new($window, "media/" + @map.tilesheet, 5, 200, 100, 16, 16)
     button_x = 20
     button_y = 120
     GGLib::Button.new(:savemap, "SAVE MAP", button_x, button_y,

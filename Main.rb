@@ -1,19 +1,15 @@
 #!/usr/bin/env ruby
 
-require './Entity.rb'
-require './Map.rb'
-require './GhostController'
-require './HumanController'
-require './AIController'
-require './Agent'
-require './Behaviour'
+require './spatial/Entity.rb'
+require './spatial/Map.rb'
+require './spatial/Direction.rb'
+require './controller/GhostController'
+require './controller/HumanController'
+require './controller/AIController'
+require './controller/Agent'
+require './behaviour/Behaviour'
 require 'rubygems'
 require 'gosu'
-require './Direction.rb'
-
-def norm(a, b)
-  return (a/b).floor
-end
 
 module GhostID
   Ruby = 0
@@ -64,7 +60,7 @@ class GameWindow < Gosu::Window
 
   def initialize
     super 640, 480, false
-    self.caption = "Entity Testing"
+    self.caption = "Ragman!"
 
     @ghost_entities = Hash.new
     @agents = Hash.new

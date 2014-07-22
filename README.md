@@ -22,13 +22,14 @@ so that anyone can use it, but this is an early version of what it'll be.
 Using the editor
 ====
 We can load an existing map or create a new one from scratch
-...
+
+```
 $ ruby mapeditor/Main.rb
 Usage:
         * ruby Main.rb <map file>
         * ruby Main.rb <map width>
                        <map height>
-...
+```
 
 In the editor, we can place tiles of several kinds:
 * Solid
@@ -48,14 +49,14 @@ We just have to execute Main.rb in order to play. Also, as this is a
 very early version, it's currently of no interest at all. For example, you will
 find that warps doesn't work, they just break the game.
 
-...
+```
 ruby Main.rb
-...
+```
 
 or
 
-...
+```
 ruby Main.rb some/map
-...
+```
 
 
