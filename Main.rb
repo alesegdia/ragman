@@ -154,6 +154,19 @@ class GameWindow < Gosu::Window
     @powerpills.each do |c|
       @map.tile_images[TileKind::PowerPill].draw( c.x * @map.tile_width, c.y * @map.tile_height, 2 )
     end
+
+    col = Gosu::Color.argb(0x33FFFF00)
+    @map.navmap.navnodes.each{ |n|
+      for i in 0..3 do
+        if n.is_used(i) then
+          nxt = n.get_link_node( i )
+          draw_line(
+            (n.x+0.5) * @map.tile_width , (n.y+0.5) * @map.tile_height, col,
+            (nxt.x+0.5) * @map.tile_width, (nxt.y+0.5) * @map.tile_height, col, 1
+          )
+        end
+      end
+    }
   end
 
   def button_down(id)

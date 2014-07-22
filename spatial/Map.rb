@@ -38,6 +38,7 @@ end
 class Map
   attr_reader :map, :tilesheet, :tile_width, :tile_height, :width, :height
   attr_reader :tile_images, :entity_info
+  attr_reader :navmap
 
   # tile_width, tile_height, map_width, map_height, default_tile, tilesheet
   def initialize(window, modo, *rest)

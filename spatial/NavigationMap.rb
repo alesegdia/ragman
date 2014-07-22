@@ -20,12 +20,28 @@ class NavNode
     return @links[dir]
   end
 
+  def is_used( dir )
+    return @links[dir] != nil
+  end
+
+  def equals( node )
+    return @x == node.x && @y == node.y
+  end
+
   def set_link_node( dir, node )
-    @links[dir] = node
+    if not equals(node) then @links[dir] = node end
   end
 
   def is_active?
     return @links != nil
+  end
+
+  def debug
+
+    #puts "node (" + @x + "," + @y + ")"
+    #for i in 0..3 do
+    #  puts Direction::to_str( i ) + ": " +
+    #end
   end
 
 end
@@ -51,6 +67,26 @@ class NavigationMap
     parse_map
   end
 
+  def try_follow_link( node, dir, dx, dy, iter )
+    puts "asd"
+    next_node = @navmap[node.y+dy*iter][node.x+dx*iter]
+    if next_node != nil then
+      if not @map.is_solid?(next_node.x,next_node.y) then
+        if @navmap[next_node.y][next_node.x].is_active? then
+          node.set_link_node(dir, next_node)
+        else
+          try_follow_link( node, dir, dx, dy, iter+1 )
+        end
+      end
+    end
+  end
+
+  def debug
+    @navnodes.each{ |n|
+      n.debug
+    }
+  end
+
   def parse_map
 
     # capture nodes
@@ -58,7 +94,17 @@ class NavigationMap
 
     # set links
     # acceder a la secuencial
+    @navnodes.each{ |n|
+      try_follow_link( n, Direction::Up, 0, -1, 1 )
+      try_follow_link( n, Direction::Down, 0, 1, 1 )
+      try_follow_link( n, Direction::Left, -1, 0, 1 )
+      try_follow_link( n, Direction::Right, 1, 0, 1 )
+    }
 
+  end
+
+  def set_links( navnode )
+    try_follow_link( navnode, Direction::Up )
   end
 
   def check_branches( nodo, nodos, force = false )
