@@ -2,7 +2,7 @@ require 'rubygems'
 require 'gosu'
 require './spatial/Direction.rb'
 require './spatial/Entity.rb'
-require './behaviour/Behaviour.rb'
+require './ai/behaviour/Behaviour.rb'
 require './spatial/Map.rb'
 
 def norm(a, b)

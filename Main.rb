@@ -7,11 +7,11 @@ require './controller/GhostController'
 require './controller/HumanController'
 require './controller/AIController'
 require './controller/Agent'
-require './behaviour/Behaviour'
-require './aialgo/astar.rb'
+require './ai/behaviour/Behaviour'
+require './ai/algo/astar.rb'
 require 'rubygems'
 require 'gosu'
-require './FPSCounter.rb'
+require './util/FPSCounter.rb'
 
 module GhostID
   Ruby = 0

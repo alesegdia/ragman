@@ -3,7 +3,7 @@ require 'gosu'
 require './spatial/Map.rb'
 require './spatial/Entity.rb'
 require './spatial/Direction.rb'
-require './aialgo/astar.rb'
+require './ai/algo/astar.rb'
 
 
 def pickup_dir
