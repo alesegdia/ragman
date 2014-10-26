@@ -126,7 +126,7 @@ class GameWindow < Gosu::Window
     warp = nil
     for i in 0..@warps.size-1 do
       w = @warps[i]
-      if Gosu::distance( @pacman.x, @pacman.y, w.x * 16, w.y * 16) < 24 then
+      if Gosu::distance( @pacman.x, @pacman.y, w.x * 16, w.y * 16) < 16 then
         warp = i
       end
     end
@@ -134,15 +134,19 @@ class GameWindow < Gosu::Window
     if warp != nil then
       if not @in_warp then
         warp_to = @warps[(warp+1) % @warps.size]
+
         xoff, yoff = 0, 0
-        case @pacman_controller.direction
-        when Direction::Left then xoff = -1.5
-        when Direction::Right then xoff = 1.5
-        when Direction::Up then yoff = -1.5
-        when Direction::Down then yoff = 1.5
+        case @pacman_controller.last_direction
+        when Direction::Left then xoff = -1
+        when Direction::Right then xoff = 1
+        when Direction::Up then yoff = -1
+        when Direction::Down then yoff = 1
         end
+        #@pacman.x = (warp_to.x+xoff) * 16
+        #@pacman.y = (warp_to.y+yoff) * 16
+
         @pacman.x = (warp_to.x+xoff) * 16
-        @pacman.y = (warp_to.y+yoff) * 16
+        @pacman.y = (warp_to.y+0) * 16
       end
       @in_warp = true
     else
