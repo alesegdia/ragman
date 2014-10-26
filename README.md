@@ -73,22 +73,14 @@ Screens, please!
 
 Simulation running as it is today. Green circles are AI pathnodes, and yellow lines represent links between nodes.
 This way you don't have to use all tiles as nodes for pathfinding, but a NavigationMap is provided instead with proper
-methods for pathfinding. NavigationMap is not finished, so nodes are just set up but actual pathfinding isn't still provided.
+methods for pathfinding. Red path is the A\* result path from going from top-left to bottom-right corner. Still need to
+use it in a proper behaviour.
 
-![alt tag](https://raw.github.com/alesegdia/ragman/master/media/screen1.png)
+![alt tag](https://raw.github.com/alesegdia/ragman/master/media/screen2.png)
 
 Also, the map editor is working too. I hope no more changes are added so that it doesn't break again. Map format is somehow fixed, since
 I just let one kind of tileset to be used, but it could easily be patched to support other custom tiles, just thought there would be
 no interest on that right now.
 
 ![alt tag](https://raw.github.com/alesegdia/ragman/master/media/screen0.png)
-
-
-**UPDATE**
-
-Now A\* seems to be working fine. A few A\* are executed per frame for performance testing and seems to
-work quite well. Red path is the solution path from top-left to bottom-right corners.
-
-![alt tag](https://raw.github.com/alesegdia/ragman/master/media/screen2.png)
-
 
