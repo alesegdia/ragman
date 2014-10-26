@@ -77,13 +77,13 @@ class GameWindow < Gosu::Window
 
 	@font = Gosu::Font.new(self, "Arial", 12) #window,window.initial.font_name, window.initial.font_size)
     @tehfpsctr = FPSCounter.new()
-    	@tehfpsctr.show_fps = true
+	@tehfpsctr.show_fps = true
 
 	astar = AStar.new( @map.navmap )
 	astar.setnodes( @map.navmap.get(1,1), @map.navmap.get(26,28) )
 	while astar.step == AStarState::RUNNING do ; end
 	astar.getpath.each { |n|
-		n.debug()
+		#n.debug()
 	}
 
 	@powertimer = 0

@@ -23,7 +23,7 @@ class Behaviour
 
   def think
 
-	  (0..10).each {
+	  (0..1).each {
 		astar = AStar.new( @map.navmap )
 		astar.setnodes( @map.navmap.get(1,1), @map.navmap.get(26,28) )
 		while astar.step == AStarState::RUNNING do ; end

@@ -21,6 +21,7 @@ class AStar
 
 	def setnodes( origin, goal )
 		origin.parent = nil
+		origin.list = :open_set
 		origin.g = 0
 		origin.h = origin.cost_to( goal )
 		origin.f = origin.h
@@ -35,7 +36,7 @@ class AStar
 	def getneighboors(node)
 		neigh = []
 		(0..3).each do |i|
-			if node.is_used i then
+			if node.is_active? and node.is_used i then
 				neigh << node.get_link_node(i)
 			end
 		end
@@ -46,7 +47,7 @@ class AStar
 	# p0, p1 -> { x, y }
 	def step
 		@iter = @iter + 1
-		@openset.sort_by!{ |n| n.h }
+		@openset.sort_by!{ |n| n.f }
 		@openset.reverse!
 		current = @openset.pop
 		if current.is_same? @goal then

@@ -28,7 +28,7 @@ class NavNode
   end
 
   def reset_heuristics
-	@h = @f = @g = 0
+	@h = @f = @g = 9999999999999
   end
 
   def manh( px0, py0, px1, py1 )
@@ -94,6 +94,7 @@ class NavigationMap
     @navnodes = Array.new
 
     parse_map
+    puts @navnodes.size()
   end
 
   def try_follow_link( node, dir, dx, dy, iter )
@@ -118,6 +119,34 @@ class NavigationMap
     @navnodes.each{ |n|
       n.debug
     }
+  end
+
+  def parse_map2
+	(1..@map.width-2).each { |x|
+		(1..@map.height-2).each { |y|
+			if not @map.is_solid?( x, y ) then
+				navnode = @navmap[y][x]
+				navnode.debug
+				navnode.set_active
+				if not navnode.is_active? then
+					navnode.set_active
+				end
+				if not @map.is_solid?(x-1,y) then
+					navnode.set_link_node(Direction::Left,get(x-1,y))
+				end
+				if not @map.is_solid?(x+1,y) then
+					navnode.set_link_node(Direction::Right,get(x+1,y))
+				end
+				if not @map.is_solid?(x,y+1) then
+					navnode.set_link_node(Direction::Down,get(x,y+1))
+				end
+				if not @map.is_solid?(x,y-1) then
+					navnode.set_link_node(Direction::Up,get(x,y-1))
+				end
+				@navnodes << navnode
+			end
+		}
+	}
   end
 
   def parse_map
