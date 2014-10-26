@@ -72,8 +72,8 @@ Screens, please!
 ====
 
 Simulation running as it is today. Green circles are AI pathnodes, and yellow lines represent links between nodes.
-This way you don't have to use all tiles as nodes for pathfinding, but a NavigationMap is provided instead with proper
-methods for pathfinding. Red path is the A\* result path from going from top-left to bottom-right corner. Still need to
+This way you don't have to use all tiles as nodes for pathfinding, but a NavigationMap and an A\* implementation
+are provided instead. Red path is the A\* result path from going from top-left to bottom-right corner. Still need to
 use it in a proper behaviour.
 
 ![alt tag](https://raw.github.com/alesegdia/ragman/master/media/screen2.png)
