@@ -9,11 +9,13 @@ To install gosu:
 gem install gosu
 ```
 
+You can try with other versions of Ruby and tell me if it works.
+
 Features
 ====
 * AI platform for Pacman game
 * Pacman and ghosts included
-* Original rules respected (for ghosts, Pacman just dies and game is reset)
+* Original rules respected (for ghosts, Pacman just dies and game is restarted)
 * Clean and easy-to-use interface for coding AI
 * Pathfinding included using NavigationMap interface
 * EDITOR INCLUDED!
@@ -79,4 +81,13 @@ I just let one kind of tileset to be used, but it could easily be patched to sup
 no interest on that right now.
 
 ![alt tag](https://raw.github.com/alesegdia/ragman/master/media/screen0.png)
+
+
+**UPDATE**
+
+Now A\* seems to be working fine. A few A\* are executed per frame for performance testing and seems to
+work quite well. Red path is the solution path from top-left to bottom-right corners.
+
+![alt tag](https://raw.github.com/alesegdia/ragman/master/media/screen2.png)
+
 

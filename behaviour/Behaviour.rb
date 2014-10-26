@@ -3,6 +3,7 @@ require 'gosu'
 require './spatial/Map.rb'
 require './spatial/Entity.rb'
 require './spatial/Direction.rb'
+require './aialgo/astar.rb'
 
 
 def pickup_dir
@@ -16,10 +17,18 @@ class Behaviour
   def initialize(sprite, map)
     @sprite = sprite
     @map = map
+	@astar = AStar.new( @map.navmap )
     @action = Direction::Up
   end
 
   def think
+
+	  (0..10).each {
+		astar = AStar.new( @map.navmap )
+		astar.setnodes( @map.navmap.get(1,1), @map.navmap.get(26,28) )
+		while astar.step == AStarState::RUNNING do ; end
+	  }
+
     if @sprite.is_free(@sprite.direction) then
       @action = @sprite.direction
     else

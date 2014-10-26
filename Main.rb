@@ -8,8 +8,10 @@ require './controller/HumanController'
 require './controller/AIController'
 require './controller/Agent'
 require './behaviour/Behaviour'
+require './aialgo/astar.rb'
 require 'rubygems'
 require 'gosu'
+require './FPSCounter.rb'
 
 module GhostID
   Ruby = 0
@@ -73,6 +75,21 @@ class GameWindow < Gosu::Window
       @map = Map.new(self, OpenMode::Gameplay, ARGV[0])
     end
 
+	@font = Gosu::Font.new(self, "Arial", 12) #window,window.initial.font_name, window.initial.font_size)
+    @tehfpsctr = FPSCounter.new()
+    	@tehfpsctr.show_fps = true
+
+	astar = AStar.new( @map.navmap )
+	astar.setnodes( @map.navmap.get(1,1), @map.navmap.get(26,28) )
+	while astar.step == AStarState::RUNNING do ; end
+	astar.getpath.each { |n|
+		n.debug()
+	}
+
+	@powertimer = 0
+
+	puts "pasos: #{astar.iter}"
+	@score = 0
     @pills = @map.entity_info["pills"]
     @powerpills = @map.entity_info["powerpills"]
     @warps = @map.entity_info["warp"]
@@ -91,8 +108,16 @@ class GameWindow < Gosu::Window
   end
 
   def update
+	  if @powertimer > 0 then @powertimer = @powertimer - Gosu::miliseconds end
+  	  cb = lambda do | x0, y0, x1, y1 |
+  	  	  if Gosu::distance( x0, y0, x1, y1 ) < 4
+			@score = @score + 1
+			return true
+		  end
+		  return false
+	  end
     @pills.reject! do |pill|
-      Gosu::distance( @pacman.x, @pacman.y, pill.x * 16, pill.y * 16 ) < 4
+      cb.call( @pacman.x, @pacman.y, pill.x * 16, pill.y * 16 )
     end
     @powerpills.reject! do |pill|
       Gosu::distance( @pacman.x, @pacman.y, pill.x * 16, pill.y * 16 ) < 4
@@ -138,8 +163,15 @@ class GameWindow < Gosu::Window
     @pacman_agent.update
     @agents.each do |k,c|
       c.update
+      if is_pacman_near? c
+		close()
+	  end
     end
 
+  end
+
+  def is_pacman_near? agent
+	return Gosu::distance( agent.x, agent.y, @pacman_agent.x, @pacman_agent.y ) < 8
   end
 
   def draw
@@ -167,6 +199,24 @@ class GameWindow < Gosu::Window
         end
       end
     }
+
+
+    col = Gosu::Color.argb(0xFFFF0000)
+	astar = AStar.new( @map.navmap )
+	astar.setnodes( @map.navmap.get(1,1), @map.navmap.get(26,28) )
+	while astar.step == AStarState::RUNNING do ; end
+
+	path = astar.getpath
+	(0..(path.size-2)).each { |i|
+		draw_line(
+			(path[i].x + 0.5) * @map.tile_width, (path[i].y + 0.5) * @map.tile_height, col,
+			(path[i+1].x + 0.5) * @map.tile_width, (path[i+1].y + 0.5) * @map.tile_height, col, 1
+		)
+
+	}
+
+  	  @tehfpsctr.update(@font, 350, 0)
+	@font.draw("SCORE: #{@score}", 0, 0, 1, 2, 2)
   end
 
   def button_down(id)

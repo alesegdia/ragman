@@ -18,6 +18,13 @@ class Agent
   	@prev_action = Direction::Up
   end
 
+  def x
+  	  @entity.x
+  end
+  def y
+  	  @entity.y
+  end
+
   def pathfind( from, to )
 
   end

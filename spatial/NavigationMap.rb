@@ -4,15 +4,45 @@ require './math/Vec2.rb'
 class NavNode
 
   attr_reader :links, :x, :y
+  attr_accessor :h, :f, :g, :list, :parent
+
 
   def initialize(x,y)
     @links = nil
+    @list = nil
     @x = x
     @y = y
+    @parent = nil
+    #@pos.x = x
+    #@pos.y = y
+    self.reset_heuristics
+  end
+
+
+  def is_same?( other )
+	return (@x == other.x and @y == other.y)
   end
 
   def set_active
     @links = Array.new(4) { |i| nil }
+  end
+
+  def reset_heuristics
+	@h = @f = @g = 0
+  end
+
+  def manh( px0, py0, px1, py1 )
+	return (px0 - px1).abs + (py0 - py1).abs
+  end
+
+  def compute_heuristics( origin, goal )
+	@g = cost_to( origin )
+	@h = cost_to( goal )
+	@f = @g + @h
+  end
+
+  def cost_to( node )
+	return manh( @x, @y, node.x, node.y )
   end
 
   # check for active to access
@@ -21,7 +51,7 @@ class NavNode
   end
 
   def is_used( dir )
-    return @links[dir] != nil
+    return (@links[dir] != nil)
   end
 
   def equals( node )
@@ -37,8 +67,7 @@ class NavNode
   end
 
   def debug
-
-    #puts "node (" + @x + "," + @y + ")"
+    puts "node (#{@x}, #{@y})"
     #for i in 0..3 do
     #  puts Direction::to_str( i ) + ": " +
     #end
@@ -68,7 +97,7 @@ class NavigationMap
   end
 
   def try_follow_link( node, dir, dx, dy, iter )
-    puts "asd"
+    #puts "asd"
     next_node = @navmap[node.y+dy*iter][node.x+dx*iter]
     if next_node != nil then
       if not @map.is_solid?(next_node.x,next_node.y) then
@@ -79,6 +108,10 @@ class NavigationMap
         end
       end
     end
+  end
+
+  def get( x, y )
+	return @navmap[y][x]
   end
 
   def debug
